@@ -120,6 +120,7 @@ class _LogInState extends State<LogIn> {
               child: Material(
                 color: Colors.purple.shade200,
                 borderRadius: BorderRadius.circular(25.0),
+                shadowColor: Colors.transparent,
                 elevation: 7.0,
                 child: Center(
                   child: Text(
@@ -182,14 +183,14 @@ class _LogInState extends State<LogIn> {
                 Text(
                   "Don't have an account yet?",
                   style: TextStyle(
-                    decoration: TextDecoration.underline,
                     fontFamily: "Montserrat",
                   ),
                 ),
+                SizedBox(width: 5),
                 InkWell(
                   onTap: () => print("tapped"),
                   child: Text(
-                    " Sign Up",
+                    "Sign Up",
                     style: TextStyle(
                       decoration: TextDecoration.underline,
                       fontFamily: "Montserrat",
