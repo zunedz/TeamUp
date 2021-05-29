@@ -23,7 +23,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           Container(
             child: Stack(
@@ -31,7 +31,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
                 Container(
                   padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
                   child: Text(
-                    "Hello",
+                    "Team",
                     style: TextStyle(
                         fontSize: 80.0,
                         fontWeight: FontWeight.bold,
@@ -39,9 +39,9 @@ class _MyHomeAppState extends State<MyHomeApp> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.fromLTRB(15.0, 175.0, 0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(25.0, 175.0, 0.0, 0.0),
                   child: Text(
-                    "There",
+                    "Up",
                     style: TextStyle(
                         fontSize: 80.0,
                         fontWeight: FontWeight.bold,
@@ -49,15 +49,71 @@ class _MyHomeAppState extends State<MyHomeApp> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.fromLTRB(255.0, 175.0, 0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(150.0, 175.0, 0.0, 0.0),
                   child: Text(
-                    ".",
+                    "!",
                     style: TextStyle(
                         color: Colors.purple,
                         fontSize: 80.0,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Montserrat"),
                   ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 0.0),
+            child: Column(
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "EMAIL",
+                    labelStyle: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: "PASSWORD",
+                    labelStyle: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Container(
+                  alignment: Alignment(1, 0),
+                  child: InkWell(
+                    onTap: () => print("tapped"),
+                    child: Text(
+                      "Forgot Password",
+                      style: TextStyle(
+                        color: Colors.purple,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 40.0,
                 ),
               ],
             ),
