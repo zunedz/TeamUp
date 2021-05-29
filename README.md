@@ -1,6 +1,8 @@
-# orbital_login
+# Team Up
 
-A new Flutter project.
+An Orbital Project by:
+- Daffa Fathani Adila
+- Edward Alvin
 
 ## Getting Started
 
