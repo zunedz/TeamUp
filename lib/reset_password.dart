@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 
+import "login.dart";
+
 class ResetPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class ResetPassword extends StatelessWidget {
                 height: 50,
                 margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
                 child: GestureDetector(
-                  onTap: () => print("logged in"),
+                  onTap: () => print("Password reseted"),
                   child: Material(
                     color: Colors.purple.shade200,
                     borderRadius: BorderRadius.circular(25.0),
@@ -65,6 +67,33 @@ class ResetPassword extends StatelessWidget {
                   ),
                 ),
               ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return LogIn();
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Back to Log In page",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontFamily: "Montserrat",
+                          color: Colors.purple,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),

@@ -1,5 +1,9 @@
 import "package:flutter/material.dart";
 
+import "signup.dart";
+import "reset_password.dart";
+import "home.dart";
+
 class LogIn extends StatefulWidget {
   @override
   _LogInState createState() => _LogInState();
@@ -93,7 +97,16 @@ class _LogInState extends State<LogIn> {
                 Container(
                   alignment: Alignment(1, 0),
                   child: InkWell(
-                    onTap: () => print("tapped"),
+                    onTap: () {
+                      print("tapped");
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ResetPassword();
+                          },
+                        ),
+                      );
+                    },
                     child: Text(
                       "Forgot Password",
                       style: TextStyle(
@@ -116,7 +129,16 @@ class _LogInState extends State<LogIn> {
             height: 50,
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: GestureDetector(
-              onTap: () => print("logged in"),
+              onTap: () {
+                //implement auth here
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return Home();
+                    },
+                  ),
+                );
+              },
               child: Material(
                 color: Colors.purple.shade200,
                 borderRadius: BorderRadius.circular(25.0),
@@ -142,7 +164,16 @@ class _LogInState extends State<LogIn> {
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             color: Colors.transparent,
             child: GestureDetector(
-              onTap: () => print("logged in"),
+              onTap: () {
+                //implement auth here
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return Home();
+                    },
+                  ),
+                );
+              },
               child: Container(
                 decoration: BoxDecoration(
                     border: Border.all(
@@ -188,7 +219,15 @@ class _LogInState extends State<LogIn> {
                 ),
                 SizedBox(width: 5),
                 InkWell(
-                  onTap: () => print("tapped"),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SignUp();
+                        },
+                      ),
+                    );
+                  },
                   child: Text(
                     "Sign Up",
                     style: TextStyle(

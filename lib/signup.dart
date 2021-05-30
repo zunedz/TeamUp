@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:orbital_login/login.dart';
 
 class SignUp extends StatelessWidget {
   @override
@@ -116,6 +117,43 @@ class SignUp extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Already have an account?",
+                  style: TextStyle(
+                    fontFamily: "Montserrat",
+                  ),
+                ),
+                SizedBox(width: 5),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return LogIn();
+                        },
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Log In",
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontFamily: "Montserrat",
+                      color: Colors.purple,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
