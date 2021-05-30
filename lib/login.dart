@@ -10,6 +10,31 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  final formKey = new GlobalKey<FormState>();
+
+  String? email, password;
+
+  bool checkFields() {
+    final form = formKey.currentState;
+    if (form != null) {
+      if (form.validate()) {
+        form.save();
+        return true;
+      }
+    }
+    return false;
+  }
+
+  String? validateEmail(String value) {
+    String pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value))
+      return 'Enter a Valid Email';
+    else
+      return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +83,16 @@ class _LogInState extends State<LogIn> {
             child: Column(
               children: [
                 Form(
+                  key: formKey,
                   child: Column(
                     children: [
                       TextFormField(
+                        validator: (value) => value == ""
+                            ? "Email is required"
+                            : validateEmail(value as String),
+                        onSaved: (value) {
+                          email = value;
+                        },
                         decoration: InputDecoration(
                           labelText: "EMAIL",
                           labelStyle: TextStyle(
@@ -76,6 +108,11 @@ class _LogInState extends State<LogIn> {
                         height: 20.0,
                       ),
                       TextFormField(
+                        validator: (value) =>
+                            value == "" ? "Password is required" : null,
+                        onSaved: (value) {
+                          password = value;
+                        },
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: "PASSWORD",
@@ -130,7 +167,7 @@ class _LogInState extends State<LogIn> {
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: GestureDetector(
               onTap: () {
-                //implement auth here
+                if (!checkFields()) return; //implement auth here
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) {
