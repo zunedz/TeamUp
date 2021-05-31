@@ -84,15 +84,18 @@ class SignUp extends StatelessWidget {
                     onSaved: (value) {
                       username = value;
                     },
-                    decoration: InputDecoration(
-                      labelText: "USERNAME",
+                    decoration: new InputDecoration(
+                      labelText: "Username",
+                      fillColor: Colors.white,
                       labelStyle: TextStyle(
                           fontFamily: "Montserrat",
                           fontWeight: FontWeight.bold,
                           color: Colors.grey),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.purple),
+                      border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(25.0),
+                        borderSide: new BorderSide(),
                       ),
+                      //fillColor: Colors.green
                     ),
                   ),
                   SizedBox(
@@ -105,15 +108,18 @@ class SignUp extends StatelessWidget {
                     onSaved: (value) {
                       email = value;
                     },
-                    decoration: InputDecoration(
-                      labelText: "EMAIL",
+                    decoration: new InputDecoration(
+                      labelText: "Email",
+                      fillColor: Colors.white,
                       labelStyle: TextStyle(
                           fontFamily: "Montserrat",
                           fontWeight: FontWeight.bold,
                           color: Colors.grey),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.purple),
+                      border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(25.0),
+                        borderSide: new BorderSide(),
                       ),
+                      //fillColor: Colors.green
                     ),
                   ),
                   SizedBox(
@@ -127,15 +133,18 @@ class SignUp extends StatelessWidget {
                       password = value;
                     },
                     obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: "PASSWORD",
+                    decoration: new InputDecoration(
+                      labelText: "Password",
+                      fillColor: Colors.white,
                       labelStyle: TextStyle(
                           fontFamily: "Montserrat",
                           fontWeight: FontWeight.bold,
                           color: Colors.grey),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.purple),
+                      border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(25.0),
+                        borderSide: new BorderSide(),
                       ),
+                      //fillColor: Colors.green
                     ),
                   ),
                   SizedBox(
@@ -149,15 +158,18 @@ class SignUp extends StatelessWidget {
                       password = value;
                     },
                     obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: "CONFIRM PASSWORD",
+                    decoration: new InputDecoration(
+                      labelText: "Confirm Password",
+                      fillColor: Colors.white,
                       labelStyle: TextStyle(
                           fontFamily: "Montserrat",
                           fontWeight: FontWeight.bold,
                           color: Colors.grey),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.purple),
+                      border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(25.0),
+                        borderSide: new BorderSide(),
                       ),
+                      //fillColor: Colors.green
                     ),
                   ),
                 ],
