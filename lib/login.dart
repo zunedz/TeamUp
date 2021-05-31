@@ -115,15 +115,18 @@ class _LogInState extends State<LogIn> {
                         onChanged: (value) {
                           email = value;
                         },
-                        decoration: InputDecoration(
-                          labelText: "EMAIL",
+                        decoration: new InputDecoration(
+                          labelText: "Email",
+                          fillColor: Colors.white,
                           labelStyle: TextStyle(
                               fontFamily: "Montserrat",
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple),
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                            borderSide: new BorderSide(),
                           ),
+                          //fillColor: Colors.green
                         ),
                       ),
                       SizedBox(
@@ -136,15 +139,18 @@ class _LogInState extends State<LogIn> {
                           password = value;
                         },
                         obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: "PASSWORD",
+                        decoration: new InputDecoration(
+                          labelText: "Password",
+                          fillColor: Colors.white,
                           labelStyle: TextStyle(
                               fontFamily: "Montserrat",
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple),
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                            borderSide: new BorderSide(),
                           ),
+                          //fillColor: Colors.green
                         ),
                       ),
                     ],
