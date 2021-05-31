@@ -1,12 +1,14 @@
 import "package:flutter/material.dart";
+import "package:firebase_auth/firebase_auth.dart";
 
 import 'package:orbital_login/login.dart';
 import "home.dart";
 
 class SignUp extends StatelessWidget {
   final formKey = new GlobalKey<FormState>();
+  final auth = FirebaseAuth.instance;
 
-  String? username, email, password;
+  String? username, email, password, passwordConfirm;
 
   bool checkFields() {
     final form = formKey.currentState;
@@ -36,9 +38,9 @@ class SignUp extends StatelessWidget {
       return null;
   }
 
-  String? confirmPassword(String value) {
-    if (password != null) {
-      if (password != value) {
+  String? confirmPassword() {
+    if (password != null && passwordConfirm != null) {
+      if (password != passwordConfirm) {
         return "Password does not match";
       }
       return null;
@@ -105,7 +107,7 @@ class SignUp extends StatelessWidget {
                     validator: (value) => value == ""
                         ? "Email is required"
                         : validateEmail(value as String),
-                    onSaved: (value) {
+                    onChanged: (value) {
                       email = value;
                     },
                     decoration: new InputDecoration(
@@ -153,9 +155,9 @@ class SignUp extends StatelessWidget {
                   TextFormField(
                     validator: (value) => value == ""
                         ? "Password is required"
-                        : confirmPassword(value as String),
-                    onFieldSubmitted: (value) {
-                      password = value;
+                        : confirmPassword(),
+                    onChanged: (value) {
+                      passwordConfirm = value;
                     },
                     obscureText: true,
                     decoration: new InputDecoration(
@@ -181,9 +183,29 @@ class SignUp extends StatelessWidget {
             height: 50,
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
                 if (!checkFields()) return; //implement auth here
+                try {
+                  UserCredential userCredential = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                    email: email as String,
+                    password: password as String,
+                  );
+                  User? user = FirebaseAuth.instance.currentUser;
+                  if (!user!.emailVerified) user.sendEmailVerification();
 
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'weak-password') {
+                    print('The password provided is too weak.');
+                    return;
+                  } else if (e.code == 'email-already-in-use') {
+                    print('The account already exists for that email.');
+                    return;
+                  }
+                } catch (e) {
+                  print(e);
+                  return;
+                }
                 print(username);
                 print(email);
                 print(password);

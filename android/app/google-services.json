@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "996161654915",
+    "project_id": "team-up-4784f",
+    "storage_bucket": "team-up-4784f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996161654915:android:af806870548d800ec00bb6",
+        "android_client_info": {
+          "package_name": "com.example.orbital_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996161654915-qarco8or02v225tasv9jorblbobcl2lv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAR7Td2ig_b4QqFSt3dUql2iJFrjG3Buw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "996161654915-qarco8or02v225tasv9jorblbobcl2lv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
