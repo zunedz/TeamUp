@@ -1,4 +1,6 @@
 import "package:flutter/material.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:google_sign_in/google_sign_in.dart";
 
 import "signup.dart";
 import "reset_password.dart";
@@ -11,8 +13,28 @@ class LogIn extends StatefulWidget {
 
 class _LogInState extends State<LogIn> {
   final formKey = new GlobalKey<FormState>();
+  final auth = FirebaseAuth.instance;
 
   String? email, password;
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount googleUser =
+        await GoogleSignIn().signIn() as GoogleSignInAccount;
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
 
   bool checkFields() {
     final form = formKey.currentState;
@@ -90,7 +112,7 @@ class _LogInState extends State<LogIn> {
                         validator: (value) => value == ""
                             ? "Email is required"
                             : validateEmail(value as String),
-                        onSaved: (value) {
+                        onChanged: (value) {
                           email = value;
                         },
                         decoration: InputDecoration(
@@ -110,7 +132,7 @@ class _LogInState extends State<LogIn> {
                       TextFormField(
                         validator: (value) =>
                             value == "" ? "Password is required" : null,
-                        onSaved: (value) {
+                        onChanged: (value) {
                           password = value;
                         },
                         obscureText: true,
@@ -166,8 +188,23 @@ class _LogInState extends State<LogIn> {
             height: 50,
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: GestureDetector(
-              onTap: () {
-                if (!checkFields()) return; //implement auth here
+              onTap: () async {
+                if (!checkFields()) return;
+                try {
+                  UserCredential userCredential =
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: email as String,
+                    password: password as String,
+                  );
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'user-not-found') {
+                    print('No user found for that email.');
+                    return;
+                  } else if (e.code == 'wrong-password') {
+                    print('Wrong password provided for that user.');
+                    return;
+                  }
+                }
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) {
@@ -201,8 +238,18 @@ class _LogInState extends State<LogIn> {
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             color: Colors.transparent,
             child: GestureDetector(
-              onTap: () {
-                //implement auth here
+              onTap: () async {
+                try {
+                  UserCredential userCredential = await signInWithGoogle();
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'user-not-found') {
+                    print('No user found for that email.');
+                    return;
+                  } else if (e.code == 'wrong-password') {
+                    print('Wrong password provided for that user.');
+                    return;
+                  }
+                }
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) {
