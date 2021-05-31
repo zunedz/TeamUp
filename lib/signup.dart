@@ -191,6 +191,9 @@ class SignUp extends StatelessWidget {
                     email: email as String,
                     password: password as String,
                   );
+                  User? user = FirebaseAuth.instance.currentUser;
+                  if (!user!.emailVerified) user.sendEmailVerification();
+
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'weak-password') {
                     print('The password provided is too weak.');
