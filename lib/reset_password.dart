@@ -51,6 +51,9 @@ class ResetPassword extends StatelessWidget {
                   textAlign: TextAlign.start,
                 ),
               ),
+              SizedBox(
+                height: 15,
+              ),
               Form(
                 key: formKey,
                 child: TextFormField(
@@ -60,15 +63,18 @@ class ResetPassword extends StatelessWidget {
                   onSaved: (value) {
                     email = value;
                   },
-                  decoration: InputDecoration(
-                    labelText: "EMAIL",
+                  decoration: new InputDecoration(
+                    labelText: "Email",
+                    fillColor: Colors.white,
                     labelStyle: TextStyle(
                         fontFamily: "Montserrat",
                         fontWeight: FontWeight.bold,
                         color: Colors.grey),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.purple),
+                    border: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(25.0),
+                      borderSide: new BorderSide(),
                     ),
+                    //fillColor: Colors.green
                   ),
                 ),
               ),
