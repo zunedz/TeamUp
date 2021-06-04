@@ -114,8 +114,8 @@ class _LogInState extends State<LogIn> {
           Container(
             height: 50,
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-            child: GestureDetector(
-              onTap: () async {
+            child: MaterialButton(
+              onPressed: () async {
                 if (!checkFields(formKey)) return;
                 try {
                   UserCredential userCredential =
@@ -140,21 +140,24 @@ class _LogInState extends State<LogIn> {
                   ),
                 );
               },
-              child: Material(
-                color: Colors.purple.shade200,
-                borderRadius: BorderRadius.circular(25.0),
-                shadowColor: Colors.transparent,
-                elevation: 7.0,
-                child: Center(
-                  child: Text(
-                    "LOGIN",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
+              elevation: 0,
+              height: 50,
+              color: Colors.purple.shade200,
+              minWidth: 10000,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(25),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  "LOGIN",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "Montserrat",
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -164,8 +167,8 @@ class _LogInState extends State<LogIn> {
             height: 50,
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             color: Colors.transparent,
-            child: GestureDetector(
-              onTap: () async {
+            child: MaterialButton(
+              onPressed: () async {
                 try {
                   UserCredential userCredential = await signInWithGoogle();
                 } on FirebaseAuthException catch (e) {
@@ -185,34 +188,36 @@ class _LogInState extends State<LogIn> {
                   ),
                 );
               },
-              child: Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.purple.shade200,
-                      width: 1,
+              elevation: 0,
+              height: 50,
+              color: Colors.white,
+              minWidth: 10000,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(25),
+                ),
+                side: BorderSide(color: Colors.purple.shade200, width: 1),
+              ),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Image.asset("assets/images/google.png"),
                     ),
-                    borderRadius: BorderRadius.circular(25)),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Image.asset("assets/images/google.png"),
-                      ),
-                      SizedBox(width: 15),
-                      Center(
-                        child: Text(
-                          "LOG IN WITH GOOGLE",
-                          style: TextStyle(
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15,
-                            color: Colors.purple.shade200,
-                          ),
+                    SizedBox(width: 15),
+                    Center(
+                      child: Text(
+                        "LOG IN WITH GOOGLE",
+                        style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                          color: Colors.purple.shade200,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

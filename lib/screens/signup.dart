@@ -6,8 +6,14 @@ import 'package:orbital_login/styles/styles_login.dart';
 import 'home.dart';
 import '../helpers/validator.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
+  @override
+  _SignUpState createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final formKey = new GlobalKey<FormState>();
+
   final auth = FirebaseAuth.instance;
 
   String? username, email, password, passwordConfirm;
@@ -83,8 +89,8 @@ class SignUp extends StatelessWidget {
           Container(
             height: 50,
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-            child: GestureDetector(
-              onTap: () async {
+            child: MaterialButton(
+              onPressed: () async {
                 if (!checkFields(formKey)) return; //implement auth here
                 try {
                   UserCredential userCredential = await FirebaseAuth.instance
@@ -117,20 +123,24 @@ class SignUp extends StatelessWidget {
                   ),
                 );
               },
-              child: Material(
-                color: Colors.purple.shade200,
-                borderRadius: BorderRadius.circular(25.0),
-                elevation: 7.0,
-                child: Center(
-                  child: Text(
-                    "SIGN UP",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
+              elevation: 0,
+              height: 50,
+              color: Colors.purple.shade200,
+              minWidth: 10000,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(25),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  "SIGN UP",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "Montserrat",
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    color: Colors.white,
                   ),
                 ),
               ),

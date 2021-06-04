@@ -4,7 +4,12 @@ import 'package:orbital_login/styles/styles_login.dart';
 import 'login.dart';
 import '../helpers/validator.dart';
 
-class ResetPassword extends StatelessWidget {
+class ResetPassword extends StatefulWidget {
+  @override
+  _ResetPasswordState createState() => _ResetPasswordState();
+}
+
+class _ResetPasswordState extends State<ResetPassword> {
   final formKey = new GlobalKey<FormState>();
 
   String? email, password;
@@ -51,25 +56,29 @@ class ResetPassword extends StatelessWidget {
               Container(
                 height: 50,
                 margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                child: GestureDetector(
-                  onTap: () {
+                child: MaterialButton(
+                  onPressed: () {
                     if (!checkFields(formKey))
                       return; //send reset password email, to be implemented later
                   },
-                  child: Material(
-                    color: Colors.purple.shade200,
-                    borderRadius: BorderRadius.circular(25.0),
-                    elevation: 7.0,
-                    child: Center(
-                      child: Text(
-                        "RESET PASSWORD",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
+                  elevation: 0,
+                  height: 50,
+                  color: Colors.purple.shade200,
+                  minWidth: 10000,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(25),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "RESET PASSWORD",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                        color: Colors.white,
                       ),
                     ),
                   ),
