@@ -1,52 +1,16 @@
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 
-import 'package:orbital_login/login.dart';
-import "home.dart";
+import 'package:orbital_login/screens/login.dart';
+import 'package:orbital_login/styles/styles_login.dart';
+import 'home.dart';
+import '../helpers/validator.dart';
 
 class SignUp extends StatelessWidget {
   final formKey = new GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
 
   String? username, email, password, passwordConfirm;
-
-  bool checkFields() {
-    final form = formKey.currentState;
-    if (form != null) {
-      if (form.validate()) {
-        form.save();
-        return true;
-      }
-    }
-    return false;
-  }
-
-  String? validateEmail(String value) {
-    String pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (!regex.hasMatch(value))
-      return 'Enter a Valid Email';
-    else
-      return null;
-  }
-
-  String? validatePassword(String value) {
-    if (value.length < 8) {
-      return "Password must be at least 8 characters length";
-    } else
-      return null;
-  }
-
-  String? confirmPassword() {
-    if (password != null && passwordConfirm != null) {
-      if (password != passwordConfirm) {
-        return "Password does not match";
-      }
-      return null;
-    } else
-      return "Password is required";
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +24,7 @@ class SignUp extends StatelessWidget {
             child: Center(
               child: Text(
                 "Sign Up",
-                style: TextStyle(
-                  color: Colors.purple.shade200,
-                  fontSize: 80,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: "Montserrat",
-                ),
+                style: signStyle,
               ),
             ),
           ),
@@ -77,102 +36,44 @@ class SignUp extends StatelessWidget {
               child: Column(
                 children: [
                   TextFormField(
-                    validator: (value) {
-                      if (value == "") {
-                        return "Username is required";
-                      } else
-                        return null;
-                    },
+                    validator: usernameValidator,
                     onSaved: (value) {
-                      username = value;
+                      username = value!.trim();
                     },
-                    decoration: new InputDecoration(
-                      labelText: "Username",
-                      fillColor: Colors.white,
-                      labelStyle: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey),
-                      border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(25.0),
-                        borderSide: new BorderSide(),
-                      ),
-                      //fillColor: Colors.green
-                    ),
+                    decoration: inputDecoration("Username"),
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
                   TextFormField(
-                    validator: (value) => value == ""
-                        ? "Email is required"
-                        : validateEmail(value as String),
+                    validator: emailValidator,
                     onChanged: (value) {
-                      email = value;
+                      email = value.trim();
                     },
-                    decoration: new InputDecoration(
-                      labelText: "Email",
-                      fillColor: Colors.white,
-                      labelStyle: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey),
-                      border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(25.0),
-                        borderSide: new BorderSide(),
-                      ),
-                      //fillColor: Colors.green
-                    ),
+                    decoration: inputDecoration("Email"),
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
                   TextFormField(
-                    validator: (value) => value == ""
-                        ? "Password is required"
-                        : validatePassword(value as String),
+                    validator: passwordValidator,
                     onChanged: (value) {
                       password = value;
                     },
                     obscureText: true,
-                    decoration: new InputDecoration(
-                      labelText: "Password",
-                      fillColor: Colors.white,
-                      labelStyle: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey),
-                      border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(25.0),
-                        borderSide: new BorderSide(),
-                      ),
-                      //fillColor: Colors.green
-                    ),
+                    decoration: inputDecoration("Password"),
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
                   TextFormField(
-                    validator: (value) => value == ""
-                        ? "Password is required"
-                        : confirmPassword(),
+                    validator: (value) =>
+                        confirmPassword(password, passwordConfirm),
                     onChanged: (value) {
                       passwordConfirm = value;
                     },
                     obscureText: true,
-                    decoration: new InputDecoration(
-                      labelText: "Confirm Password",
-                      fillColor: Colors.white,
-                      labelStyle: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey),
-                      border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(25.0),
-                        borderSide: new BorderSide(),
-                      ),
-                      //fillColor: Colors.green
-                    ),
+                    decoration: inputDecoration("Confirm Password"),
                   ),
                 ],
               ),
@@ -184,7 +85,7 @@ class SignUp extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: GestureDetector(
               onTap: () async {
-                if (!checkFields()) return; //implement auth here
+                if (!checkFields(formKey)) return; //implement auth here
                 try {
                   UserCredential userCredential = await FirebaseAuth.instance
                       .createUserWithEmailAndPassword(
@@ -193,7 +94,6 @@ class SignUp extends StatelessWidget {
                   );
                   User? user = FirebaseAuth.instance.currentUser;
                   if (!user!.emailVerified) user.sendEmailVerification();
-
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'weak-password') {
                     print('The password provided is too weak.');
@@ -263,11 +163,7 @@ class SignUp extends StatelessWidget {
                   },
                   child: Text(
                     "Log In",
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontFamily: "Montserrat",
-                      color: Colors.purple,
-                    ),
+                    style: hyperlinkStyle,
                   ),
                 )
               ],

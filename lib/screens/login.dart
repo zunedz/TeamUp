@@ -2,9 +2,12 @@ import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:google_sign_in/google_sign_in.dart";
 
-import "signup.dart";
-import "reset_password.dart";
-import "home.dart";
+import 'signup.dart';
+import 'reset_password.dart';
+import 'home.dart';
+import '../helpers/validator.dart';
+import '../services/googleAuth.dart';
+import '../styles/styles_login.dart';
 
 class LogIn extends StatefulWidget {
   @override
@@ -16,46 +19,6 @@ class _LogInState extends State<LogIn> {
   final auth = FirebaseAuth.instance;
 
   String? email, password;
-
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount googleUser =
-        await GoogleSignIn().signIn() as GoogleSignInAccount;
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-
-  bool checkFields() {
-    final form = formKey.currentState;
-    if (form != null) {
-      if (form.validate()) {
-        form.save();
-        return true;
-      }
-    }
-    return false;
-  }
-
-  String? validateEmail(String value) {
-    String pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (!regex.hasMatch(value))
-      return 'Enter a Valid Email';
-    else
-      return null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,31 +33,21 @@ class _LogInState extends State<LogIn> {
                   padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
                   child: Text(
                     "Team",
-                    style: TextStyle(
-                        fontSize: 80.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Montserrat"),
+                    style: titleStyle,
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.fromLTRB(25.0, 175.0, 0.0, 0.0),
                   child: Text(
                     "Up",
-                    style: TextStyle(
-                        fontSize: 80.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Montserrat"),
+                    style: titleStyle,
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.fromLTRB(150.0, 175.0, 0.0, 0.0),
                   child: Text(
                     "!",
-                    style: TextStyle(
-                        color: Colors.purple,
-                        fontSize: 80.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Montserrat"),
+                    style: signStyle,
                   ),
                 ),
               ],
@@ -109,49 +62,22 @@ class _LogInState extends State<LogIn> {
                   child: Column(
                     children: [
                       TextFormField(
-                        validator: (value) => value == ""
-                            ? "Email is required"
-                            : validateEmail(value as String),
+                        validator: emailValidator,
                         onChanged: (value) {
-                          email = value;
+                          email = value.trim();
                         },
-                        decoration: new InputDecoration(
-                          labelText: "Email",
-                          fillColor: Colors.white,
-                          labelStyle: TextStyle(
-                              fontFamily: "Montserrat",
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey),
-                          border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(25.0),
-                            borderSide: new BorderSide(),
-                          ),
-                          //fillColor: Colors.green
-                        ),
+                        decoration: inputDecoration("Email"),
                       ),
                       SizedBox(
                         height: 20.0,
                       ),
                       TextFormField(
-                        validator: (value) =>
-                            value == "" ? "Password is required" : null,
+                        validator: passwordValidator,
                         onChanged: (value) {
                           password = value;
                         },
                         obscureText: true,
-                        decoration: new InputDecoration(
-                          labelText: "Password",
-                          fillColor: Colors.white,
-                          labelStyle: TextStyle(
-                              fontFamily: "Montserrat",
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey),
-                          border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(25.0),
-                            borderSide: new BorderSide(),
-                          ),
-                          //fillColor: Colors.green
-                        ),
+                        decoration: inputDecoration("Password"),
                       ),
                     ],
                   ),
@@ -174,12 +100,7 @@ class _LogInState extends State<LogIn> {
                     },
                     child: Text(
                       "Forgot Password",
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                      ),
+                      style: hyperlinkStyle,
                     ),
                   ),
                 ),
@@ -195,7 +116,7 @@ class _LogInState extends State<LogIn> {
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: GestureDetector(
               onTap: () async {
-                if (!checkFields()) return;
+                if (!checkFields(formKey)) return;
                 try {
                   UserCredential userCredential =
                       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -320,11 +241,7 @@ class _LogInState extends State<LogIn> {
                   },
                   child: Text(
                     "Sign Up",
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontFamily: "Montserrat",
-                      color: Colors.purple,
-                    ),
+                    style: hyperlinkStyle,
                   ),
                 )
               ],

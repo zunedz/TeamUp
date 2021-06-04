@@ -1,32 +1,13 @@
 import "package:flutter/material.dart";
+import 'package:orbital_login/styles/styles_login.dart';
 
-import "login.dart";
+import 'login.dart';
+import '../helpers/validator.dart';
 
 class ResetPassword extends StatelessWidget {
   final formKey = new GlobalKey<FormState>();
 
   String? email, password;
-
-  bool checkFields() {
-    final form = formKey.currentState;
-    if (form != null) {
-      if (form.validate()) {
-        form.save();
-        return true;
-      }
-    }
-    return false;
-  }
-
-  String? validateEmail(String value) {
-    String pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (!regex.hasMatch(value))
-      return 'Enter Valid Email';
-    else
-      return null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,25 +38,11 @@ class ResetPassword extends StatelessWidget {
               Form(
                 key: formKey,
                 child: TextFormField(
-                  validator: (value) => value == ""
-                      ? "Email is required"
-                      : validateEmail(value as String),
+                  validator: emailValidator,
                   onSaved: (value) {
                     email = value;
                   },
-                  decoration: new InputDecoration(
-                    labelText: "Email",
-                    fillColor: Colors.white,
-                    labelStyle: TextStyle(
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey),
-                    border: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(25.0),
-                      borderSide: new BorderSide(),
-                    ),
-                    //fillColor: Colors.green
-                  ),
+                  decoration: inputDecoration("Email"),
                 ),
               ),
               SizedBox(
@@ -86,7 +53,7 @@ class ResetPassword extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
                 child: GestureDetector(
                   onTap: () {
-                    if (!checkFields())
+                    if (!checkFields(formKey))
                       return; //send reset password email, to be implemented later
                   },
                   child: Material(
@@ -125,11 +92,7 @@ class ResetPassword extends StatelessWidget {
                       },
                       child: Text(
                         "Back to LogIn page",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontFamily: "Montserrat",
-                          color: Colors.purple,
-                        ),
+                        style: hyperlinkStyle,
                       ),
                     )
                   ],
