@@ -4,10 +4,10 @@ import "package:google_sign_in/google_sign_in.dart";
 
 import 'signup.dart';
 import 'reset_password.dart';
-import 'home.dart';
-import '../helpers/validator.dart';
-import '../services/googleAuth.dart';
-import '../styles/styles_login.dart';
+import '../home/home.dart';
+import '../../helpers/validator.dart';
+import '../../services/googleAuth.dart';
+import '../../styles/styles_login.dart';
 
 class LogIn extends StatefulWidget {
   @override

@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import 'package:orbital_login/styles/styles_login.dart';
 
 import 'login.dart';
-import '../helpers/validator.dart';
+import '../../helpers/validator.dart';
 
 class ResetPassword extends StatefulWidget {
   @override

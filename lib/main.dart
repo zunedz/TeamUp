@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:firebase_core/firebase_core.dart";
 
-import 'screens/login.dart';
+import 'screens/auth/login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LogIn(),
+      theme: ThemeData(
+        primaryColor: Colors.purple.shade300,
+        fontFamily: "Montserrat",
+      ),
     );
   }
 }

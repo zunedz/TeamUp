@@ -1,10 +1,10 @@
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 
-import 'package:orbital_login/screens/login.dart';
+import 'package:orbital_login/screens/auth/login.dart';
 import 'package:orbital_login/styles/styles_login.dart';
-import 'home.dart';
-import '../helpers/validator.dart';
+import '../home/home.dart';
+import '../../helpers/validator.dart';
 
 class SignUp extends StatefulWidget {
   @override
