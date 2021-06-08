@@ -13,7 +13,7 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     Text(
       'Home',
       style: optionStyle,
@@ -30,22 +30,42 @@ class _HomeState extends State<Home> {
       'Profile',
       style: optionStyle,
     ),
+    Text(
+      'Profile',
+      style: optionStyle,
+    ),
   ];
+  Widget bodyFunction() {
+    switch (_selectedIndex) {
+      case 0:
+        return Container(color: Colors.red);
+        break;
+      case 1:
+        return Container(color: Colors.blue);
+        break;
+      case 2:
+        return teamUp();
+        break;
+      case 3:
+        return Container(color: Colors.black26);
+        break;
+      default:
+        return Container(color: Colors.black26);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 20,
+        elevation: 0,
         title: Container(
-          padding: EdgeInsets.fromLTRB(90, 0, 0, 0),
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: bodyFunction(),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -56,48 +76,46 @@ class _HomeState extends State<Home> {
             )
           ],
         ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
-            child: GNav(
-              rippleColor: Colors.grey[300]!,
-              hoverColor: Colors.grey[100]!,
-              gap: 8,
-              activeColor: Colors.black,
-              iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[100]!,
-              color: Colors.black,
-              tabs: [
-                GButton(
-                  icon: LineIcons.home,
-                  text: 'Home',
-                ),
-                GButton(
-                  icon: LineIcons.bell,
-                  text: 'Likes',
-                ),
-                GButton(
-                  icon: LineIcons.gamepad,
-                  text: 'Search',
-                ),
-                GButton(
-                  icon: LineIcons.userFriends,
-                  text: "Friend",
-                ),
-                GButton(
-                  icon: LineIcons.user,
-                  text: 'Profile',
-                ),
-              ],
-              selectedIndex: _selectedIndex,
-              onTabChange: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-            ),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
+          child: GNav(
+            rippleColor: Colors.grey[300]!,
+            hoverColor: Colors.grey[100]!,
+            gap: 8,
+            activeColor: Colors.black,
+            iconSize: 24,
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+            duration: Duration(milliseconds: 400),
+            tabBackgroundColor: Colors.grey[100]!,
+            color: Colors.black,
+            tabs: [
+              GButton(
+                icon: LineIcons.home,
+                text: 'Home',
+              ),
+              GButton(
+                icon: LineIcons.bell,
+                text: 'Notifs',
+              ),
+              GButton(
+                icon: LineIcons.gamepad,
+                text: 'TeamUp',
+              ),
+              GButton(
+                icon: LineIcons.userFriends,
+                text: "Friend",
+              ),
+              GButton(
+                icon: LineIcons.user,
+                text: 'Profile',
+              ),
+            ],
+            selectedIndex: _selectedIndex,
+            onTabChange: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
           ),
         ),
       ),
