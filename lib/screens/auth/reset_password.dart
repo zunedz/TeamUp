@@ -91,13 +91,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return LogIn();
-                            },
-                          ),
-                        );
+                        Navigator.of(context)
+                            .pushReplacementNamed('/auth/login');
                       },
                       child: Text(
                         "Back to LogIn page",

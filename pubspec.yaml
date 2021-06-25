@@ -53,6 +53,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/google.png
+    - assets/images/add.png
+    - assets/images/search.png
+    - assets/images/toss.jpg
+    - assets/images/add-user.png
+
   
   fonts:
    -  family: Montserrat

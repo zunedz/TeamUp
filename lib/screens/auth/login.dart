@@ -89,14 +89,8 @@ class _LogInState extends State<LogIn> {
                   alignment: Alignment(1, 0),
                   child: InkWell(
                     onTap: () {
-                      print("tapped");
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return ResetPassword();
-                          },
-                        ),
-                      );
+                      Navigator.of(context)
+                          .pushReplacementNamed('/auth/reset-password');
                     },
                     child: Text(
                       "Forgot Password",
@@ -132,13 +126,7 @@ class _LogInState extends State<LogIn> {
                     return;
                   }
                 }
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return Home();
-                    },
-                  ),
-                );
+                Navigator.of(context).pushReplacementNamed('/home');
               },
               elevation: 0,
               height: 50,
@@ -180,13 +168,7 @@ class _LogInState extends State<LogIn> {
                     return;
                   }
                 }
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return Home();
-                    },
-                  ),
-                );
+                Navigator.of(context).pushReplacementNamed('/home');
               },
               elevation: 0,
               height: 50,
@@ -236,13 +218,7 @@ class _LogInState extends State<LogIn> {
                 SizedBox(width: 5),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return SignUp();
-                        },
-                      ),
-                    );
+                    Navigator.of(context).pushReplacementNamed('/auth/signup');
                   },
                   child: Text(
                     "Sign Up",
