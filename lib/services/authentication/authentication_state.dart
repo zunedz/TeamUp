@@ -1,11 +1,20 @@
 part of 'authentication_cubit.dart';
 
 @immutable
-abstract class AuthenticationState extends Equatable {}
+abstract class AuthenticationState extends Equatable {
+  AppUser? user = null;
 
-class AuthenticationInitial extends AuthenticationState {
-  final AppUser? user = null;
+  AuthenticationState();
 
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<AppUser?> get props => [user];
+}
+
+class AuthenticationInitial extends AuthenticationState {}
+
+class AuthenticationLogged extends AuthenticationState {
+
+  AuthenticationLogged.fromFirebaseUser(User? user) {
+    this.user = user != null ? AppUser.fromFirebaseUser(user) : AppUser();
+  }
 }

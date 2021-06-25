@@ -7,10 +7,14 @@ class AppUser {
   bool isVerified = false;
   bool isAnon = false;
   String? profilePicURL;
+  String? username;
+
+  AppUser();
 
   AppUser.fromFirebaseUser(User user) {
     this.user = user;
     this.uid = user.uid;
+    this.username = user.displayName;
     this.email = user.email;
     this.isVerified = user.emailVerified;
     this.isAnon = user.isAnonymous;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "package:firebase_core/firebase_core.dart";
+import 'package:orbital_login/services/authentication/authentication_cubit.dart';
 
 import 'screens/auth/login.dart';
 
@@ -10,8 +11,11 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final AuthenticationCubit auth= AuthenticationCubit();
+
   @override
   Widget build(BuildContext context) {
+    print(auth.user);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LogIn(),
