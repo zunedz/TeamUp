@@ -115,13 +115,7 @@ class _SignUpState extends State<SignUp> {
                 print(username);
                 print(email);
                 print(password);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return Home();
-                    },
-                  ),
-                );
+                Navigator.of(context).pushReplacementNamed('/home');
               },
               elevation: 0,
               height: 50,
@@ -163,13 +157,7 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(width: 5),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return LogIn();
-                        },
-                      ),
-                    );
+                    Navigator.of(context).pushReplacementNamed('/auth/login');
                   },
                   child: Text(
                     "Log In",

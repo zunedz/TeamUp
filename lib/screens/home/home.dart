@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:orbital_login/widgets/friend_list/friend_list_part.dart';
+import 'package:orbital_login/widgets/notification_list/notifications_list_part.dart';
+import 'package:orbital_login/widgets/profile_page_part.dart';
+import 'package:orbital_login/widgets/team_up_part.dart';
 import 'package:line_icons/line_icons.dart';
-
-import 'teamup.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -19,15 +22,15 @@ class _HomeState extends State<Home> {
       style: optionStyle,
     ),
     Text(
-      'Likes',
+      'Notifications',
       style: optionStyle,
     ),
     Text(
-      'Search',
+      'Team Up',
       style: optionStyle,
     ),
     Text(
-      'Profile',
+      'Friends',
       style: optionStyle,
     ),
     Text(
@@ -39,18 +42,18 @@ class _HomeState extends State<Home> {
     switch (_selectedIndex) {
       case 0:
         return Container(color: Colors.red);
-        break;
+
       case 1:
-        return Container(color: Colors.blue);
-        break;
+        return NotificationListPart();
+
       case 2:
-        return teamUp();
-        break;
+        return TeamUpPart();
+
       case 3:
-        return Container(color: Colors.black26);
-        break;
+        return FriendListPart();
+
       default:
-        return Container(color: Colors.black26);
+        return ProfilePagePart();
     }
   }
 
@@ -64,6 +67,15 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () {},
+            ),
+          )
+        ],
       ),
       body: bodyFunction(),
       bottomNavigationBar: Container(
