@@ -5,7 +5,6 @@ import 'package:orbital_login/widgets/notification_list/notifications_list_part.
 import 'package:orbital_login/widgets/profile_page_part.dart';
 import 'package:orbital_login/widgets/team_up_part.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override

@@ -1,11 +1,8 @@
 import 'package:cool_alert/cool_alert.dart';
 import "package:flutter/material.dart";
-import "package:firebase_auth/firebase_auth.dart";
-
-import 'package:orbital_login/screens/auth/login.dart';
 import 'package:orbital_login/services/firebaseAuth.dart';
 import 'package:orbital_login/styles/styles_login.dart';
-import '../home/home.dart';
+
 import '../../helpers/validator.dart';
 
 class SignUp extends StatefulWidget {
