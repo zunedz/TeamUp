@@ -34,6 +34,7 @@ dependencies:
   provider: ^5.0.0
   google_nav_bar: ^5.0.5
   line_icons: ^2.0.1
+  cool_alert: ^1.1.0
 
 dev_dependencies:
   flutter_test:

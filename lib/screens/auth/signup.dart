@@ -1,7 +1,9 @@
+import 'package:cool_alert/cool_alert.dart';
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 
 import 'package:orbital_login/screens/auth/login.dart';
+import 'package:orbital_login/services/firebaseAuth.dart';
 import 'package:orbital_login/styles/styles_login.dart';
 import '../home/home.dart';
 import '../../helpers/validator.dart';
@@ -14,7 +16,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final formKey = new GlobalKey<FormState>();
 
-  final auth = FirebaseAuth.instance;
+  final AuthMethods authMethods = AuthMethods();
 
   String? username, email, password, passwordConfirm;
 
@@ -43,8 +45,8 @@ class _SignUpState extends State<SignUp> {
                 children: [
                   TextFormField(
                     validator: usernameValidator,
-                    onSaved: (value) {
-                      username = value!.trim();
+                    onChanged: (value) {
+                      username = value.trim();
                     },
                     decoration: inputDecoration("Username"),
                   ),
@@ -91,30 +93,19 @@ class _SignUpState extends State<SignUp> {
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: MaterialButton(
               onPressed: () async {
-                if (!checkFields(formKey)) return; //implement auth here
-                try {
-                  UserCredential userCredential = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                    email: email as String,
-                    password: password as String,
+                if (!checkFields(formKey)) return;
+                String? message = await authMethods.signUpWithEmailAndPassword(
+                    email!, password!);
+                if (message != null) {
+                  await CoolAlert.show(
+                    context: context,
+                    type: CoolAlertType.error,
+                    text: message,
+                    title: "Failed to LogIn",
+                    autoCloseDuration: Duration(seconds: 3),
                   );
-                  User? user = FirebaseAuth.instance.currentUser;
-                  if (!user!.emailVerified) user.sendEmailVerification();
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'weak-password') {
-                    print('The password provided is too weak.');
-                    return;
-                  } else if (e.code == 'email-already-in-use') {
-                    print('The account already exists for that email.');
-                    return;
-                  }
-                } catch (e) {
-                  print(e);
                   return;
                 }
-                print(username);
-                print(email);
-                print(password);
                 Navigator.of(context).pushReplacementNamed('/home');
               },
               elevation: 0,

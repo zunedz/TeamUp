@@ -1,10 +1,9 @@
+import 'package:cool_alert/cool_alert.dart';
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:google_sign_in/google_sign_in.dart";
+import 'package:orbital_login/services/firebaseAuth.dart';
 
-import 'signup.dart';
-import 'reset_password.dart';
-import '../home/home.dart';
 import '../../helpers/validator.dart';
 import '../../services/googleAuth.dart';
 import '../../styles/styles_login.dart';
@@ -16,7 +15,7 @@ class LogIn extends StatefulWidget {
 
 class _LogInState extends State<LogIn> {
   final formKey = new GlobalKey<FormState>();
-  final auth = FirebaseAuth.instance;
+  AuthMethods authMethods = AuthMethods();
 
   String? email, password;
 
@@ -111,20 +110,17 @@ class _LogInState extends State<LogIn> {
             child: MaterialButton(
               onPressed: () async {
                 if (!checkFields(formKey)) return;
-                try {
-                  UserCredential userCredential =
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: email as String,
-                    password: password as String,
+                String? message = await authMethods.signInWithEmailAndPassword(
+                    email!, password!);
+                if (message != null) {
+                  await CoolAlert.show(
+                    context: context,
+                    type: CoolAlertType.error,
+                    text: message,
+                    title: "Failed to LogIn",
+                    autoCloseDuration: Duration(seconds: 3),
                   );
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'user-not-found') {
-                    print('No user found for that email.');
-                    return;
-                  } else if (e.code == 'wrong-password') {
-                    print('Wrong password provided for that user.');
-                    return;
-                  }
+                  return;
                 }
                 Navigator.of(context).pushReplacementNamed('/home');
               },
@@ -159,14 +155,9 @@ class _LogInState extends State<LogIn> {
               onPressed: () async {
                 try {
                   UserCredential userCredential = await signInWithGoogle();
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'user-not-found') {
-                    print('No user found for that email.');
-                    return;
-                  } else if (e.code == 'wrong-password') {
-                    print('Wrong password provided for that user.');
-                    return;
-                  }
+                  print(userCredential.user!.uid);
+                } catch (e) {
+                  print(e);
                 }
                 Navigator.of(context).pushReplacementNamed('/home');
               },

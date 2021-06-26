@@ -1,4 +1,6 @@
+import 'package:cool_alert/cool_alert.dart';
 import "package:flutter/material.dart";
+import 'package:orbital_login/services/firebaseAuth.dart';
 import 'package:orbital_login/styles/styles_login.dart';
 
 import 'login.dart';
@@ -11,6 +13,8 @@ class ResetPassword extends StatefulWidget {
 
 class _ResetPasswordState extends State<ResetPassword> {
   final formKey = new GlobalKey<FormState>();
+
+  AuthMethods authMethods = AuthMethods();
 
   String? email, password;
 
@@ -44,7 +48,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 key: formKey,
                 child: TextFormField(
                   validator: emailValidator,
-                  onSaved: (value) {
+                  onChanged: (value) {
                     email = value;
                   },
                   decoration: inputDecoration("Email"),
@@ -57,9 +61,22 @@ class _ResetPasswordState extends State<ResetPassword> {
                 height: 50,
                 margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
                 child: MaterialButton(
-                  onPressed: () {
-                    if (!checkFields(formKey))
-                      return; //send reset password email, to be implemented later
+                  onPressed: () async {
+                    if (!checkFields(formKey)) {
+                      try {
+                        await authMethods.resetPass(email!);
+                        await CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.success,
+                          text: "An email has been sent",
+                          title: "Failed to LogIn",
+                          autoCloseDuration: Duration(seconds: 3),
+                        );
+                        return;
+                      } catch (e) {
+                        print(e);
+                      }
+                    }
                   },
                   elevation: 0,
                   height: 50,
