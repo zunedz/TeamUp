@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orbital_login/models/game.dart';
 import 'package:orbital_login/models/room.dart';
-import 'package:orbital_login/models/user.dart';
 import 'package:provider/provider.dart';
 
 class CreateNewRoom extends StatefulWidget {

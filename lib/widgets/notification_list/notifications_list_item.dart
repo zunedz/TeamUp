@@ -22,7 +22,7 @@ class NotificationListItem extends StatelessWidget {
                 Flexible(
                   flex: 4,
                   child: Text(
-                    "${notification.notificationSender!.userName!} just followed you",
+                    "${notification.notificationSender!.username!} just followed you",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
@@ -55,7 +55,7 @@ class NotificationListItem extends StatelessWidget {
                 Flexible(
                   flex: 4,
                   child: Text(
-                    "${notification.notificationSender!.userName!} invite you to join a room",
+                    "${notification.notificationSender!.username!} invite you to join a room",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),

@@ -7,7 +7,7 @@ class Room with ChangeNotifier {
   final String? id;
   final String? roomName;
   final int? maxCapacity;
-  List<User> users = [];
+  List<AppUser> users = [];
   Game? gamePlayed;
   String? description;
 
@@ -19,7 +19,7 @@ class Room with ChangeNotifier {
     @required this.maxCapacity,
   });
 
-  bool addUser(User newUser) {
+  bool addUser(AppUser newUser) {
     if (users.length < maxCapacity!) {
       users.add(newUser);
       notifyListeners();

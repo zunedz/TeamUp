@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class FriendListPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final List<User> friendList = Provider.of<User>(context).friendList!;
+    final List<AppUser> friendList = Provider.of<AppUser>(context).friendList!;
 
     return Container(
       child: Column(

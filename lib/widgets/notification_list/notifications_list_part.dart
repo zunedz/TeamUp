@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:orbital_login/models/user.dart';
 import 'package:orbital_login/widgets/notification_list/notifications_list_item.dart';
-import 'package:orbital_login/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
 
 class NotificationListPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final notificationList = Provider.of<User>(context).notificationList;
+    final notificationList = Provider.of<AppUser>(context).notificationList;
 
     return Container(
       child: Column(

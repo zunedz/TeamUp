@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:orbital_login/models/user.dart';
 import 'package:intl/intl.dart';
+import 'package:orbital_login/services/firebaseAuth.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePagePart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final User userData = Provider.of<User>(context);
+    final AppUser userData = Provider.of<AppUser>(context);
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +48,7 @@ class ProfilePagePart extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  userData.userName!,
+                  userData.username!,
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(
@@ -80,7 +81,7 @@ class ProfilePagePart extends StatelessWidget {
                 ),
                 SizedBox(height: 30),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => AuthMethods().signOut(context),
                   child: Text(
                     "Sign Out",
                     style: TextStyle(

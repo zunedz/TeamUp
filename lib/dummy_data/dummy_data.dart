@@ -2,41 +2,41 @@ import 'package:orbital_login/models/game.dart';
 import 'package:orbital_login/models/room.dart';
 import 'package:orbital_login/models/user.dart';
 
-User user1 = User(
+AppUser user1 = AppUser(
   isInsideRoom: false,
   isOnline: false,
   pictureUrl: "https://miro.medium.com/max/239/1*U8_90Kf74Oc0xRF8iOV6jw.png",
-  userName: "username1",
+  username: "username1",
   dateCreated: DateTime.now(),
   email: "asda@gmail.com",
   id: "1",
 );
 
-User user2 = User(
+AppUser user2 = AppUser(
   isInsideRoom: false,
   isOnline: false,
   pictureUrl: "",
-  userName: "username2",
+  username: "username2",
   dateCreated: DateTime.now(),
   email: "asda2@gmail.com",
   id: "2",
 );
 
-User user3 = User(
+AppUser user3 = AppUser(
   isInsideRoom: false,
   isOnline: false,
   pictureUrl: "",
-  userName: "username3",
+  username: "username3",
   dateCreated: DateTime.now(),
   email: "asda3@gmail.com",
   id: "3",
 );
 
-User user4 = User(
+AppUser user4 = AppUser(
   isInsideRoom: false,
   isOnline: false,
   pictureUrl: "",
-  userName: "username4",
+  username: "username4",
   dateCreated: DateTime.now(),
   email: "asda4@gmail.com",
   id: "4",
