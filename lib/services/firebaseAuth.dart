@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -55,9 +57,15 @@ class AuthMethods {
     }
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     try {
       await _auth.signOut();
+      await GoogleSignIn().signOut();
+      Navigator.of(context).pushReplacementNamed('/');
+      final snackBar = SnackBar(
+        content: Text('Logged out'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } catch (e) {
       print(e);
     }

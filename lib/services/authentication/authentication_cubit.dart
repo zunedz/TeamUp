@@ -14,11 +14,11 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   final GoogleSignIn _googleAuth = GoogleSignIn();
   String _log = "";
 
-  AppUser? get user => this.state.props[0];
+  // AppUser? get user => this.state is AuthenticationLogged ? this.state.user : null;
 
-  // AppUser get currentUser => AppUser.fromFirebaseUser(_firebaseAuth.currentUser!);
+  AppUser get currentUser => AppUser.fromFirebaseUser(_firebaseAuth.currentUser!);
 
-  bool get isSignedIn => this.user != null;
+  bool get isSignedIn => this.currentUser != null; // remember to change to AppUser
 
   String get log => this._log;
 
@@ -81,6 +81,12 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
+  @override
+  void onChange(Change<AuthenticationState> change) {
+    print(change);
+    super.onChange(change);
+  }
+
   void resetPass(String email) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
@@ -89,3 +95,5 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 }
+
+Change change = Change(currentState: AuthenticationInitial, nextState: AuthenticationLogged);

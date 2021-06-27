@@ -10,28 +10,42 @@ final AppUser emptyUser = AppUser(
     id: "",
   );
 
+  final User? firebaseUser = FirebaseAuth.instance.currentUser;
+
+
 @immutable
 abstract class AuthenticationState extends Equatable {
-  AppUser? user;
-  // String log = "";
-
-  AuthenticationState();
-
-  @override
-  List<AppUser?> get props => [user];
+  const AuthenticationState();
 }
 
-class AuthenticationInitial extends AuthenticationState {}
+class AuthenticationInitial extends AuthenticationState {
+  const AuthenticationInitial();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AuthenticationLoading extends AuthenticationState {
+  const AuthenticationLoading();
+
+  @override
+  List<Object?> get props => [];
+}
 
 class AuthenticationLogged extends AuthenticationState {
+  final AppUser user;
+  const AuthenticationLogged(this.user);
 
-  AuthenticationLogged.fromFirebaseUser(User? user) {
-    this.user = user != null ? AppUser.fromFirebaseUser(user) : emptyUser;
-  }
+  AuthenticationLogged.fromFirebaseUser(User? user) : this(user != null ? AppUser.fromFirebaseUser(user) : emptyUser);
+
+  @override
+  List<Object?> get props => [user];
 }
 
 class AuthenticationError extends AuthenticationState {
-  // AuthenticationError(String errorLog) {
-  //   // this.log = errorLog;
-  // }
+  final String message;
+  const AuthenticationError(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }

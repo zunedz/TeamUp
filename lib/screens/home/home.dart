@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:orbital_login/services/firebaseAuth.dart';
 import 'package:orbital_login/widgets/friend_list/friend_list_part.dart';
 import 'package:orbital_login/widgets/notification_list/notifications_list_part.dart';
 import 'package:orbital_login/widgets/profile_page_part.dart';
@@ -71,7 +72,7 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.all(10.0),
             child: IconButton(
               icon: Icon(Icons.exit_to_app),
-              onPressed: () {},
+              onPressed: () => AuthMethods().signOut(context),
             ),
           )
         ],

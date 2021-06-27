@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:orbital_login/models/user.dart';
 import 'package:intl/intl.dart';
+import 'package:orbital_login/services/firebaseAuth.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePagePart extends StatelessWidget {
@@ -80,7 +81,7 @@ class ProfilePagePart extends StatelessWidget {
                 ),
                 SizedBox(height: 30),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => AuthMethods().signOut(context),
                   child: Text(
                     "Sign Out",
                     style: TextStyle(
