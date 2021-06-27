@@ -19,6 +19,16 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
   bool get isLoggedIn => this.user != null;
 
+  void registerWithEmail(String email, String password) async {
+    try {
+      final UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      final User? user = userCredential.user;
+      this.emit(AuthenticationLogged.fromFirebaseUser(user));
+    } catch(e) {
+      print(e);
+    }
+  }
+
   void logInWithGoogle() async {
     try {
       final GoogleSignInAccount googleUser = await _googleAuth.signIn() as GoogleSignInAccount;
@@ -35,6 +45,16 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
+  void logInWithEmail(String email, String password) async {
+    try {
+      final UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      final User? user = userCredential.user;
+      this.emit(AuthenticationLogged.fromFirebaseUser(user));
+    } catch(e) {
+      print(e);
+    }
+  }
+
   void logOut() async {
     try {
       _firebaseAuth.signOut();
@@ -44,4 +64,5 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       print(e);
     }
   }
+
 }
