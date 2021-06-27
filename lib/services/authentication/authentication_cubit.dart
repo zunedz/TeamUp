@@ -12,24 +12,31 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleAuth = GoogleSignIn();
+  String _log = "";
 
   AppUser? get user => this.state.props[0];
 
   // AppUser get currentUser => AppUser.fromFirebaseUser(_firebaseAuth.currentUser!);
 
-  bool get isLoggedIn => this.user != null;
+  bool get isSignedIn => this.user != null;
 
-  void registerWithEmail(String email, String password) async {
+  String get log => this._log;
+
+  void signUpWithEmail(String email, String password) async {
     try {
       final UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       final User? user = userCredential.user;
       this.emit(AuthenticationLogged.fromFirebaseUser(user));
-    } catch(e) {
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        this._log = ('The account already exists for that email.');
+      }
+    } catch (e) {
       print(e);
     }
   }
 
-  void logInWithGoogle() async {
+  void signInWithGoogle() async {
     try {
       final GoogleSignInAccount googleUser = await _googleAuth.signIn() as GoogleSignInAccount;
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
@@ -45,17 +52,26 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  void logInWithEmail(String email, String password) async {
+  void signInWithEmail(String email, String password) async {
     try {
       final UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       final User? user = userCredential.user;
       this.emit(AuthenticationLogged.fromFirebaseUser(user));
-    } catch(e) {
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
+      if (e.code == 'user-not-found') {
+        this._log = ('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        this._log = ('Wrong password provided for that user.');
+      } else {
+        this._log = "Too many request, try again later";
+      }
+    } catch (e) {
       print(e);
     }
   }
 
-  void logOut() async {
+  void signOut() async {
     try {
       _firebaseAuth.signOut();
       _googleAuth.signOut();
@@ -65,4 +81,11 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
+  void resetPass(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print(e);
+    }
+  }
 }
