@@ -1,5 +1,15 @@
 part of 'authentication_cubit.dart';
 
+final AppUser emptyUser = AppUser(
+    isInsideRoom: false,
+    isOnline: false,
+    pictureUrl: "",
+    userName: "username2",
+    dateCreated: DateTime.now(),
+    email: "asda2@gmail.com",
+    id: "2",
+  );
+
 @immutable
 abstract class AuthenticationState extends Equatable {
   AppUser? user = null;
@@ -15,6 +25,6 @@ class AuthenticationInitial extends AuthenticationState {}
 class AuthenticationLogged extends AuthenticationState {
 
   AuthenticationLogged.fromFirebaseUser(User? user) {
-    this.user = user != null ? AppUser.fromFirebaseUser(user) : AppUser();
+    this.user = user != null ? AppUser.fromFirebaseUser(user) : emptyUser;
   }
 }
