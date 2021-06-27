@@ -19,7 +19,7 @@ import 'package:orbital_login/models/room.dart';
 
 class AppUser with ChangeNotifier {
   String? id;
-  String? userName;
+  String? username;
   String? email;
   bool? isVerified;
   bool? isOnline;
@@ -33,7 +33,7 @@ class AppUser with ChangeNotifier {
 
   AppUser({
     @required this.id,
-    @required this.userName,
+    @required this.username,
     @required this.dateCreated,
     @required this.email,
     @required this.isInsideRoom,
@@ -44,7 +44,7 @@ class AppUser with ChangeNotifier {
   AppUser.fromFirebaseUser(User user) {
     // this.user = user;
     this.id = user.uid;
-    this.userName = user.displayName;
+    this.username = user.displayName;
     this.email = user.email;
     this.isVerified = user.emailVerified;
     this.pictureUrl = user.photoURL;

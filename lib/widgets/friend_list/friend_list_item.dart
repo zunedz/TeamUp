@@ -23,7 +23,7 @@ class FriendListItem extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              friend.userName!,
+              friend.username!,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             Expanded(

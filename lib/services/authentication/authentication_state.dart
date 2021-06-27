@@ -4,7 +4,7 @@ final AppUser emptyUser = AppUser(
     isInsideRoom: false,
     isOnline: false,
     pictureUrl: "",
-    userName: "username2",
+    username: "username2",
     dateCreated: DateTime.now(),
     email: "asda2@gmail.com",
     id: "2",

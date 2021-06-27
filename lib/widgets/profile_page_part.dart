@@ -47,7 +47,7 @@ class ProfilePagePart extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  userData.userName!,
+                  userData.username!,
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(
