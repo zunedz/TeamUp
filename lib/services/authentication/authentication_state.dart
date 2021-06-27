@@ -4,10 +4,10 @@ final AppUser emptyUser = AppUser(
     isInsideRoom: false,
     isOnline: false,
     pictureUrl: "",
-    username: "username2",
+    username: "",
     dateCreated: DateTime.now(),
-    email: "asda2@gmail.com",
-    id: "2",
+    email: "",
+    id: "",
   );
 
 @immutable
