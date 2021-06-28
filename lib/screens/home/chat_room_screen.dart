@@ -10,32 +10,33 @@ class ChatRoomScreen extends StatelessWidget {
     final String roomId = ModalRoute.of(context)!.settings.arguments as String;
 
     return FutureBuilder(
-        future: FirebaseFirestore.instance
-            .collection('chatRoom')
-            .where("roomId", isEqualTo: roomId)
-            .get(),
-        builder: (ctx,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                futureRoomSnapshots) {
-          if (futureRoomSnapshots.connectionState == ConnectionState.waiting) {
-            return LoadingScreen();
-          }
-          var currentRoom = futureRoomSnapshots.data!.docs[0].data();
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("${currentRoom["roomName"]}".toUpperCase()),
+      future: FirebaseFirestore.instance
+          .collection('chatRoom')
+          .where("roomId", isEqualTo: roomId)
+          .get(),
+      builder: (ctx,
+          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+              futureRoomSnapshots) {
+        if (futureRoomSnapshots.connectionState == ConnectionState.waiting) {
+          return LoadingScreen();
+        }
+        var currentRoom = futureRoomSnapshots.data!.docs[0].data();
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("${currentRoom["roomName"]}".toUpperCase()),
+          ),
+          body: Container(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Message(currentRoom),
+                ),
+                NewMessages(currentRoom),
+              ],
             ),
-            body: Container(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Message(currentRoom),
-                  ),
-                  NewMessages(currentRoom),
-                ],
-              ),
-            ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
