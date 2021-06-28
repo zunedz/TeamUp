@@ -9,7 +9,8 @@ class TeamUpPart extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/toss.jpg'),
+              Image.asset('assets/images/team at work_solid I.png'),
+              SizedBox(height: 100),
               InkWell(
                 onTap: () {
                   Navigator.of(context).pushNamed('/home/find-room');

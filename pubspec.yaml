@@ -62,6 +62,7 @@ flutter:
     - assets/images/toss.jpg
     - assets/images/add-user.png
     - assets/images/default.png
+    - assets/images/
 
   
   fonts:
