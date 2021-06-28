@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -30,13 +31,26 @@ class AuthMethods {
   }
 
   Future<String?> signUpWithEmailAndPassword(
-      String email, String password) async {
+      String username, String email, String password) async {
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      await FirebaseFirestore.instance
+          .collection('appUser')
+          .doc('${userCredential.user!.uid}')
+          .set({
+        'createdAt': Timestamp.now(),
+        'email': email,
+        'isInsideRoom': false,
+        'roomId': "",
+        "userId": userCredential.user!.uid,
+        'username': username,
+        'avatarUrl':
+            "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
+      });
       print(userCredential.user!.uid);
       User? user = FirebaseAuth.instance.currentUser;
       if (!user!.emailVerified) user.sendEmailVerification();

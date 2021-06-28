@@ -8,7 +8,7 @@ class Room with ChangeNotifier {
   final String? roomName;
   final int? maxCapacity;
   List<AppUser> users = [];
-  Game? gamePlayed;
+  String? gamePlayed;
   String? description;
 
   Room({

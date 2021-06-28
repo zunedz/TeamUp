@@ -104,7 +104,7 @@ class AppUser with ChangeNotifier {
     Room newRoom = Room(
       roomName: roomName,
       description: description,
-      gamePlayed: gamePlayed,
+      gamePlayed: "gamePlayed",
       id: DateTime.now().toString(),
       maxCapacity: maxcapacity,
     );

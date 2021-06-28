@@ -103,8 +103,9 @@ class _SignUpState extends State<SignUp> {
                       setState(() {
                         isLoading = true;
                       });
-                      String? message = await authMethods
-                          .signUpWithEmailAndPassword(email!, password!);
+                      String? message =
+                          await authMethods.signUpWithEmailAndPassword(
+                              username!, email!, password!);
                       setState(() {
                         isLoading = false;
                       });

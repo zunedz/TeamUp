@@ -38,6 +38,7 @@ dependencies:
   equatable: ^2.0.3
   cool_alert: ^1.1.0
   loading_indicator: ^2.1.1
+  cloud_firestore: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,7 @@ flutter:
     - assets/images/search.png
     - assets/images/toss.jpg
     - assets/images/add-user.png
+    - assets/images/default.png
 
   
   fonts:
