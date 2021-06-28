@@ -1,7 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital_login/models/game.dart';
 import 'package:orbital_login/models/room.dart';
-import 'package:orbital_login/models/user.dart';
 import 'package:provider/provider.dart';
 
 class CreateNewRoom extends StatefulWidget {
@@ -64,8 +64,8 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
                 children: [
                   TextFormField(
                     validator: (val) => val == null ? "Cannot be empty" : null,
-                    onSaved: (value) {
-                      roomName = value!.trim();
+                    onChanged: (value) {
+                      roomName = value.trim();
                     },
                     decoration: inputDecoration("Room Name"),
                   ),
@@ -118,22 +118,25 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
             height: 50,
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: MaterialButton(
-              onPressed: () {
+              onPressed: () async {
                 final form = formKey.currentState;
-                if (form != null) {
-                  if (form.validate()) {
-                    form.save();
-                    Game newGame = Game("gameUrl", "imageUrl", gameName!);
-                    Room newRoom = Room(
-                        roomName: roomName,
-                        id: DateTime.now().toString(),
-                        description: description,
-                        gamePlayed: newGame,
-                        maxCapacity: maxCapacity);
-                    roomList.addRoom(newRoom);
-                    Navigator.of(context).pop();
-                  }
+                if (form!.validate()) {
+                  form.save();
+                  DocumentReference roomRef =
+                      FirebaseFirestore.instance.collection('chatRoom').doc();
+                  await roomRef.set({
+                    'gameName': gameName!,
+                    'roomCapacity': maxCapacity,
+                    'roomDescription': description,
+                    'roomId': roomRef.id,
+                    'roomName': roomName
+                  });
+
+                  Navigator.of(context).pushReplacementNamed(
+                      'home/chat-room-screen',
+                      arguments: roomRef.id);
                 }
+
                 return;
               },
               elevation: 0,

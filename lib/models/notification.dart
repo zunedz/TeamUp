@@ -9,7 +9,7 @@ enum NotificationType {
 
 class Notification {
   final String? id;
-  final User? notificationSender;
+  final AppUser? notificationSender;
   final NotificationType? type;
   final DateTime? timeReceived;
 
@@ -24,7 +24,7 @@ class Notification {
 class InviteNotification extends Notification {
   final Room? invitedRoom;
 
-  InviteNotification(User notificationSender, Room invitedRoom, String id)
+  InviteNotification(AppUser notificationSender, Room invitedRoom, String id)
       : this.invitedRoom = invitedRoom,
         super(
           id: id,
@@ -35,7 +35,7 @@ class InviteNotification extends Notification {
 }
 
 class FollowNotification extends Notification {
-  FollowNotification(User notificationSender, Room invitedRoom, String id)
+  FollowNotification(AppUser notificationSender, Room invitedRoom, String id)
       : super(
           id: id,
           notificationSender: notificationSender,

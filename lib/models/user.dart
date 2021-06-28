@@ -1,31 +1,55 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:orbital_login/dummy_data/dummy_data.dart';
 import 'package:orbital_login/models/game.dart';
 import 'package:orbital_login/models/notification.dart';
 import 'package:orbital_login/models/room.dart';
 
-class User with ChangeNotifier {
-  final String? id;
-  final String? userName;
-  final String? email;
+// class AppUser {
+//   String? uid;
+//   User? user;
+//   String? email;
+//   bool isVerified = false;
+//   bool isAnon = false;
+//   String? profilePicURL;
+//   String? username;
+
+//   AppUser();
+// }
+
+class AppUser with ChangeNotifier {
+  String? id;
+  String? username;
+  String? email;
+  bool? isVerified;
   bool? isOnline;
   bool? isInsideRoom;
   List<Room> currentRoom = [];
   Game? currentGame;
-  List<User>? friendList = [];
+  List<AppUser>? friendList = [];
   List<Notification> notificationList = [];
   String? pictureUrl;
   DateTime? dateCreated;
 
-  User({
+  AppUser({
     @required this.id,
-    @required this.userName,
+    @required this.username,
     @required this.dateCreated,
     @required this.email,
     @required this.isInsideRoom,
     @required this.isOnline,
     @required this.pictureUrl,
   });
+
+  AppUser.fromFirebaseUser(User user) {
+    // this.user = user;
+    this.id = user.uid;
+    this.username = user.displayName;
+    this.email = user.email;
+    this.isVerified = user.emailVerified;
+    this.pictureUrl = user.photoURL;
+  }
+
   void addNotification(Notification newNotification) {
     notificationList.add(newNotification);
     notifyListeners();
@@ -36,7 +60,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  void addFriend(User newFriend) {
+  void addFriend(AppUser newFriend) {
     friendList!.add(newFriend);
     newFriend.addNotification(
       Notification(
@@ -80,7 +104,7 @@ class User with ChangeNotifier {
     Room newRoom = Room(
       roomName: roomName,
       description: description,
-      gamePlayed: gamePlayed,
+      gamePlayed: "gamePlayed",
       id: DateTime.now().toString(),
       maxCapacity: maxcapacity,
     );

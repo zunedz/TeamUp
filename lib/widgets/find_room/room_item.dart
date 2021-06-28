@@ -16,7 +16,7 @@ class RoomItem extends StatelessWidget {
           collapsedBackgroundColor: Colors.grey.shade200,
           leading: CircleAvatar(
             radius: 50,
-            backgroundImage: NetworkImage(roomData.gamePlayed!.imageUrl),
+            backgroundImage: AssetImage('assets/images/default.png'),
           ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,11 +40,13 @@ class RoomItem extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).accentColor),
                 ),
-                onPressed:
-                    () {}, //push and replace the chatroom screen to the screenstacks.
+                onPressed: () {
+                  Navigator.of(context).pushNamed('home/chat-room-screen',
+                      arguments: roomData.id);
+                }, //push and replace the chatroom screen to the screenstacks.
               ),
               title: Text(
-                roomData.gamePlayed!.title,
+                roomData.gamePlayed!,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               subtitle: Text(

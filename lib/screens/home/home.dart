@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:orbital_login/services/firebaseAuth.dart';
 import 'package:orbital_login/widgets/friend_list/friend_list_part.dart';
 import 'package:orbital_login/widgets/notification_list/notifications_list_part.dart';
 import 'package:orbital_login/widgets/profile_page_part.dart';
 import 'package:orbital_login/widgets/team_up_part.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static List<Widget> _widgetOptions = <Widget>[
@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.all(10.0),
             child: IconButton(
               icon: Icon(Icons.exit_to_app),
-              onPressed: () {},
+              onPressed: () => AuthMethods().signOut(context),
             ),
           )
         ],

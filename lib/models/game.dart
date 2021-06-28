@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class Game {
   final String title;
   final String gameUrl;

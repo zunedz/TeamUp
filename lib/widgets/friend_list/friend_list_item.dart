@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:orbital_login/models/user.dart';
 
 class FriendListItem extends StatelessWidget {
-  final User friend;
+  final AppUser friend;
 
   FriendListItem(this.friend);
-  String getStatus(User friend) {
+  String getStatus(AppUser friend) {
     if (friend.isOnline == false) {
       return "Offline";
     } else {
@@ -23,7 +23,7 @@ class FriendListItem extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              friend.userName!,
+              friend.username!,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             Expanded(

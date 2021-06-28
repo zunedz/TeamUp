@@ -1,13 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:orbital_login/models/room.dart';
 import 'package:orbital_login/widgets/find_room/room_item.dart';
-import 'package:provider/provider.dart';
 
 class FindRoom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Rooms roomList = Provider.of<Rooms>(context);
-
     return Scaffold(
       body: Column(
         children: [
@@ -41,11 +40,38 @@ class FindRoom extends StatelessWidget {
           ),
           Expanded(
             //list of rooms
-            child: ListView.builder(
-              itemBuilder: (ctx, index) {
-                return RoomItem(roomList.getRoomAtIndex(index));
+            child: FutureBuilder(
+              future: FirebaseFirestore.instance.collection('chatRoom').get(),
+              builder: (context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                      futureChatRoomSnapshots) {
+                if (futureChatRoomSnapshots.connectionState ==
+                    ConnectionState.waiting) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(100.0),
+                      child: LoadingIndicator(
+                        indicatorType: Indicator.lineScale,
+                        color: Colors.purple.shade300,
+                      ),
+                    ),
+                  );
+                }
+                return ListView.builder(
+                  itemBuilder: (ctx, index) {
+                    var roomItemQuery =
+                        futureChatRoomSnapshots.data!.docs[index].data();
+                    var currentRoom = new Room(
+                        description: roomItemQuery["roomDescription"],
+                        gamePlayed: roomItemQuery['gameName'],
+                        id: roomItemQuery['roomId'],
+                        maxCapacity: roomItemQuery['roomCapacity'],
+                        roomName: roomItemQuery['roomName']);
+                    return RoomItem(currentRoom);
+                  },
+                  itemCount: futureChatRoomSnapshots.data!.docs.length,
+                );
               },
-              itemCount: roomList.getLength(),
             ),
           ),
         ],
