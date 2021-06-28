@@ -91,8 +91,8 @@ class ProfilePagePart extends StatelessWidget {
                     ),
                     Text(
                       DateFormat('dd-MM-yyyy').format(
-                          DateTime.fromMillisecondsSinceEpoch(
-                              appUser["createdAt"] * 1000)),
+                          DateTime.parse(
+                              appUser["createdAt"].toDate().toString())),
                       style: TextStyle(fontSize: 20),
                     ),
                     SizedBox(height: 30),
