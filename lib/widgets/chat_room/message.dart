@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:orbital_login/widgets/chat_room/message_bubble.dart';
+import 'package:orbital_login/models/appuser_function.dart';
+import 'package:orbital_login/widgets/chat_room/message_bubble_me.dart';
+import 'package:orbital_login/widgets/chat_room/message_bubble_people.dart';
 
 class Message extends StatelessWidget {
   final currentRoom;
@@ -9,6 +12,8 @@ class Message extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appuser = AppUserFunction();
+
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('chatRoom/${currentRoom["roomId"]}/chats')
@@ -25,7 +30,10 @@ class Message extends StatelessWidget {
         return ListView.builder(
           reverse: true,
           itemBuilder: (ctx, index) {
-            return MessageBubble(messages[index].data()['text']);
+            var message = messages[index].data();
+            return message['userId'] == appuser.getUserId()
+                ? MessageBubbleMe(message['text'], "Me")
+                : MessageBubblePeople(message['text'], message['username']);
           },
           itemCount: messages.length,
         );

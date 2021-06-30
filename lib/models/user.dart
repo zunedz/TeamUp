@@ -18,6 +18,8 @@ import 'package:orbital_login/models/room.dart';
 // }
 
 class AppUser with ChangeNotifier {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
   String? id;
   String? username;
   String? email;
@@ -40,6 +42,10 @@ class AppUser with ChangeNotifier {
     @required this.isOnline,
     @required this.pictureUrl,
   });
+
+  String getUserId() {
+    return _auth.currentUser!.uid;
+  }
 
   AppUser.fromFirebaseUser(User user) {
     // this.user = user;
