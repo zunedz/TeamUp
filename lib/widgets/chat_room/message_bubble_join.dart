@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MessageBubbleJoin extends StatelessWidget {
-  final String? userName;
+  final String? message;
 
-  MessageBubbleJoin(this.userName);
+  MessageBubbleJoin(this.message);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class MessageBubbleJoin extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "${userName} joins the room!",
+          message!,
           style: TextStyle(color: Theme.of(context).accentColor),
         )
       ],

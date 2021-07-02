@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital_login/models/game.dart';
 import 'package:orbital_login/models/room.dart';
@@ -124,16 +125,23 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
                   form.save();
                   DocumentReference roomRef =
                       FirebaseFirestore.instance.collection('chatRoom').doc();
+                  String userId = FirebaseAuth.instance.currentUser!.uid;
+                  DocumentReference userRef = FirebaseFirestore.instance
+                      .collection('appUser')
+                      .doc(userId);
+                  await userRef.update({'roomId': roomRef.id});
+
                   await roomRef.set({
                     'gameName': gameName!,
                     'roomCapacity': maxCapacity,
                     'roomDescription': description,
                     'roomId': roomRef.id,
-                    'roomName': roomName
+                    'roomName': roomName,
+                    'userIdArray': [FirebaseAuth.instance.currentUser!.uid],
                   });
-
+                  Navigator.popUntil(context, ModalRoute.withName('/home'));
                   Navigator.of(context).pushReplacementNamed(
-                      'home/chat-room-screen',
+                      '/home/chat-room-screen',
                       arguments: roomRef.id);
                 }
 

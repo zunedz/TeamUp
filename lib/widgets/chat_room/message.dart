@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital_login/models/appuser_function.dart';
+import 'package:orbital_login/widgets/chat_room/message_bubble_join.dart';
 import 'package:orbital_login/widgets/chat_room/message_bubble_me.dart';
 import 'package:orbital_login/widgets/chat_room/message_bubble_people.dart';
 
@@ -31,6 +32,9 @@ class Message extends StatelessWidget {
           reverse: true,
           itemBuilder: (ctx, index) {
             var message = messages[index].data();
+            if (message['type'] == "join") {
+              return MessageBubbleJoin(message['text']);
+            }
             return message['userId'] == appuser.getUserId()
                 ? MessageBubbleMe(message['text'], "Me")
                 : MessageBubblePeople(message['text'], message['username']);

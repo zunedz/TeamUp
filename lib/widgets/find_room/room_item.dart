@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital_login/models/room.dart';
 
@@ -26,7 +29,7 @@ class RoomItem extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               Text(
-                "${roomData.users.length} / ${roomData.maxCapacity}",
+                "${roomData.users!.length} / ${roomData.maxCapacity}",
                 style: TextStyle(color: Colors.grey),
               ),
             ],
@@ -40,9 +43,51 @@ class RoomItem extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).accentColor),
                 ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('home/chat-room-screen',
-                      arguments: roomData.id);
+                onPressed: () async {
+                  var roomRef = FirebaseFirestore.instance
+                      .collection('chatRoom')
+                      .doc(roomData.id);
+
+                  var roomUsers = await roomRef
+                      .get()
+                      .then((value) => value.data()!['userIdArray']);
+                  var roomCapacity = await roomRef
+                      .get()
+                      .then((value) => value.data()!['roomCapacity']);
+                  var userId = FirebaseAuth.instance.currentUser!.uid;
+                  var userRef = FirebaseFirestore.instance
+                      .collection('appUser')
+                      .doc(userId);
+                  var userName = await userRef
+                      .get()
+                      .then((value) => value.data()!['username']);
+                  print(roomCapacity);
+                  print(roomUsers.length);
+                  if (roomCapacity > roomUsers.length) {
+                    await roomRef.update({
+                      'userIdArray': FieldValue.arrayUnion([userId])
+                    });
+                    await userRef.update({'roomId': roomData.id});
+                    await roomRef.collection('/chats').add(
+                      {
+                        "text": "$userName has joined the room",
+                        "createdAt": Timestamp.now(),
+                        "userId": userId,
+                        "username": userName,
+                        "type": "join",
+                      },
+                    );
+                    Navigator.popUntil(context, ModalRoute.withName('/home'));
+                    Navigator.of(context).pushReplacementNamed(
+                        '/home/chat-room-screen',
+                        arguments: roomData.id);
+                  } else {
+                    await CoolAlert.show(
+                      context: context,
+                      type: CoolAlertType.error,
+                      text: "Room is fully occupied",
+                    );
+                  }
                 }, //push and replace the chatroom screen to the screenstacks.
               ),
               title: Text(

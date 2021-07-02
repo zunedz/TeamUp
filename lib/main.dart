@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             '/home': (ctx) => Home(),
             '/home/find-room': (ctx) => FindRoom(),
             '/home/create-room': (ctx) => CreateNewRoom(),
-            'home/chat-room-screen': (ctx) => ChatRoomScreen(),
+            '/home/chat-room-screen': (ctx) => ChatRoomScreen(),
           },
         ),
       ),

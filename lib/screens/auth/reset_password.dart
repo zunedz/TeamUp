@@ -84,7 +84,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 type: CoolAlertType.success,
                                 text: "An email has been sent",
                                 title: "Failed to LogIn",
-                                autoCloseDuration: Duration(seconds: 3),
                               );
                               return;
                             } catch (e) {
