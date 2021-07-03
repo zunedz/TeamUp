@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:orbital_login/models/game.dart';
-import 'package:orbital_login/models/room.dart';
-import 'package:provider/provider.dart';
 
 class CreateNewRoom extends StatefulWidget {
   @override
@@ -34,8 +31,6 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
 
   @override
   Widget build(BuildContext context) {
-    final Rooms roomList = Provider.of<Rooms>(context);
-
     return Scaffold(
       appBar: AppBar(),
       body: ListView(

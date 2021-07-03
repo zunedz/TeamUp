@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orbital_login/models/user.dart';
 import 'package:orbital_login/widgets/friend_list/friend_list_item.dart';
-import 'package:orbital_login/widgets/search_bar.dart';
+import 'package:orbital_login/widgets/chat_room/search_bar.dart';
 import 'package:provider/provider.dart';
 
 class FriendListPart extends StatelessWidget {
@@ -22,7 +22,9 @@ class FriendListPart extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed('/home/search-following-screen');
+            },
             borderRadius: BorderRadius.all(
               Radius.circular(50),
             ),
@@ -46,7 +48,7 @@ class FriendListPart extends StatelessWidget {
                     width: 15,
                   ),
                   Text(
-                    "Add Friend",
+                    "Follow people",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     softWrap: true,
                   )

@@ -3,8 +3,8 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:orbital_login/services/firebaseAuth.dart';
 import 'package:orbital_login/widgets/friend_list/friend_list_part.dart';
 import 'package:orbital_login/widgets/notification_list/notifications_list_part.dart';
-import 'package:orbital_login/widgets/profile_page_part.dart';
-import 'package:orbital_login/widgets/team_up_part.dart';
+import 'package:orbital_login/widgets/profile_page/profile_page_part.dart';
+import 'package:orbital_login/widgets/team_up/team_up_part.dart';
 import 'package:line_icons/line_icons.dart';
 
 class Home extends StatefulWidget {

@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:orbital_login/models/user.dart';
 
-import 'game.dart';
-
 class Room with ChangeNotifier {
   final String? id;
   final String? roomName;
