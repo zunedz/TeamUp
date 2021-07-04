@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:orbital_login/services/firebaseAuth.dart';
@@ -72,7 +73,16 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.all(10.0),
             child: IconButton(
               icon: Icon(Icons.exit_to_app),
-              onPressed: () => AuthMethods().signOut(context),
+              onPressed: () {
+                CoolAlert.show(
+                  context: context,
+                  type: CoolAlertType.confirm,
+                  cancelBtnText: "Cancel",
+                  onCancelBtnTap: () => Navigator.of(context).pop(),
+                  confirmBtnText: "Log Out",
+                  onConfirmBtnTap: () => AuthMethods().signOut(context),
+                );
+              },
             ),
           )
         ],

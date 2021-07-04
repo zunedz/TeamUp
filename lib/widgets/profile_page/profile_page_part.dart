@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -94,7 +95,16 @@ class ProfilePagePart extends StatelessWidget {
                     ),
                     SizedBox(height: 30),
                     InkWell(
-                      onTap: () => AuthMethods().signOut(context),
+                      onTap: () {
+                        CoolAlert.show(
+                          context: ctx,
+                          type: CoolAlertType.confirm,
+                          cancelBtnText: "Cancel",
+                          onCancelBtnTap: () => Navigator.of(context).pop(),
+                          confirmBtnText: "Log Out",
+                          onConfirmBtnTap: () => AuthMethods().signOut(context),
+                        );
+                      },
                       child: Text(
                         "Sign Out",
                         style: TextStyle(
