@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
       style: optionStyle,
     ),
     Text(
-      'Friends',
+      'Following',
       style: optionStyle,
     ),
     Text(

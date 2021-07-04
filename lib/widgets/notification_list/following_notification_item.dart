@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class SearchFollowingItem extends StatelessWidget {
-  final String imageUrl;
-  final String userName;
-  final String userId;
+class FollowingNotificationItem extends StatelessWidget {
+  final String senderName;
+  final String senderId;
+  final String createdAt;
 
-  SearchFollowingItem(this.imageUrl, this.userId, this.userName);
+  FollowingNotificationItem(this.createdAt, this.senderId, this.senderName);
 
   @override
   Widget build(BuildContext context) {
@@ -20,27 +19,30 @@ class SearchFollowingItem extends StatelessWidget {
         builder: (context,
             AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
           return ListTile(
-            leading: Image.network(imageUrl),
-            title: Text(userName),
+            title: Text("$senderName has just followed you!"),
+            subtitle: Text(createdAt),
             trailing: TextButton(
-              child: Text("Follow"),
+              child: Text(
+                "Follow back",
+                style: TextStyle(color: Theme.of(context).accentColor),
+              ),
               onPressed: () async {
                 String myUserId = FirebaseAuth.instance.currentUser!.uid;
                 await FirebaseFirestore.instance
                     .collection('appUser')
                     .doc(myUserId)
                     .update({
-                  "followingIdArray": FieldValue.arrayUnion([userId]),
+                  "followingIdArray": FieldValue.arrayUnion([senderId]),
                 });
                 await FirebaseFirestore.instance
                     .collection("appUser")
-                    .doc(userId)
+                    .doc(senderId)
                     .update({
                   "followerIdArray": FieldValue.arrayUnion([myUserId])
                 });
 
                 var notificationRef = FirebaseFirestore.instance
-                    .collection("appUser/$userId/Notification");
+                    .collection("appUser/$senderId/Notification");
 
                 var newNotification = notificationRef.doc();
                 await notificationRef.doc(newNotification.id).set({

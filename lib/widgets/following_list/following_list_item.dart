@@ -11,7 +11,9 @@ class FollowingListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Image.network(imageUrl),
+      leading: Image.network(
+        imageUrl,
+      ),
       title: Text(userName),
       trailing: Text("offline"),
     );

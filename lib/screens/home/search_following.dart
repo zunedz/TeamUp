@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital_login/widgets/loadingScreen.dart';
 import 'package:orbital_login/widgets/search_following/search_following_item.dart';
