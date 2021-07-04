@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:orbital_login/models/user.dart';
 
 class FollowingListItem extends StatelessWidget {
   final String imageUrl;

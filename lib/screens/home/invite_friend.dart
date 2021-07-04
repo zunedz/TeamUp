@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:orbital_login/widgets/invite_friend/invite_friend_item.dart';
 import 'package:orbital_login/widgets/loadingScreen.dart';
-import 'package:orbital_login/widgets/notification_list/invitation_notification_item.dart';
 
 class InviteFriendScreen extends StatelessWidget {
   @override
