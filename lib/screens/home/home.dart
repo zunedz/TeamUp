@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:orbital_login/services/firebaseAuth.dart';
-import 'package:orbital_login/widgets/friend_list/friend_list_part.dart';
+import 'package:orbital_login/widgets/following_list/following_list_part.dart';
 import 'package:orbital_login/widgets/notification_list/notifications_list_part.dart';
 import 'package:orbital_login/widgets/profile_page/profile_page_part.dart';
 import 'package:orbital_login/widgets/team_up/team_up_part.dart';
@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
         return TeamUpPart();
 
       case 3:
-        return FriendListPart();
+        return FollowingListPart();
 
       default:
         return ProfilePagePart();
@@ -115,7 +115,7 @@ class _HomeState extends State<Home> {
               ),
               GButton(
                 icon: LineIcons.userFriends,
-                text: "Friend",
+                text: "Following",
               ),
               GButton(
                 icon: LineIcons.user,

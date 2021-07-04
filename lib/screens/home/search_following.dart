@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital_login/widgets/loadingScreen.dart';
 import 'package:orbital_login/widgets/search_following/search_following_item.dart';
@@ -18,36 +19,38 @@ class _SearchFollowingScreenState extends State<SearchFollowingScreen> {
       body: Container(
         child: Column(
           children: [
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Material(
-                elevation: 0,
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                child: TextField(
-                  controller: searchTextController,
-                  cursorColor: Colors.purple.shade300,
-                  decoration: InputDecoration(
-                    hintText: "search by username",
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 32.0, vertical: 14.0),
-                    suffixIcon: InkWell(
-                      onTap: () {
-                        var tempQuery = searchTextController.text.trim();
-                        setState(() {
-                          searchQuery = tempQuery;
-                        });
-                      },
-                      child: Material(
-                        elevation: 5.0,
-                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.black,
+            SafeArea(
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Material(
+                  elevation: 0,
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  child: TextField(
+                    controller: searchTextController,
+                    cursorColor: Colors.purple.shade300,
+                    decoration: InputDecoration(
+                      hintText: "search by username",
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 32.0, vertical: 14.0),
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          var tempQuery = searchTextController.text.trim();
+                          setState(() {
+                            searchQuery = tempQuery;
+                          });
+                        },
+                        child: Material(
+                          elevation: 5.0,
+                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                          child: Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
+                      border: InputBorder.none,
                     ),
-                    border: InputBorder.none,
                   ),
                 ),
               ),
@@ -56,7 +59,7 @@ class _SearchFollowingScreenState extends State<SearchFollowingScreen> {
               child: FutureBuilder(
                   future: FirebaseFirestore.instance
                       .collection('appUser')
-                      .where("username", isEqualTo: searchQuery)
+                      .where('username', isEqualTo: searchQuery)
                       .get(),
                   builder: (ctx,
                       AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
@@ -65,7 +68,6 @@ class _SearchFollowingScreenState extends State<SearchFollowingScreen> {
                         ConnectionState.waiting) {
                       return LoadingScreen();
                     }
-                    print(searchQuery);
                     var followingList = futureSnapshots.data!.docs;
                     print(followingList);
 

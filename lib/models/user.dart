@@ -108,12 +108,12 @@ class AppUser with ChangeNotifier {
   Room createRoom(Game gamePlayed, String description, int maxcapacity,
       String discordUrl, String roomName) {
     Room newRoom = Room(
-      roomName: roomName,
-      description: description,
-      gamePlayed: "gamePlayed",
-      id: DateTime.now().toString(),
-      maxCapacity: maxcapacity,
-    );
+        roomName: roomName,
+        description: description,
+        gamePlayed: "gamePlayed",
+        id: DateTime.now().toString(),
+        maxCapacity: maxcapacity,
+        users: []);
     roomList.addRoom(newRoom);
     newRoom.addUser(this);
     isInsideRoom = true;
