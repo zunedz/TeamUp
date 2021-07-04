@@ -9,6 +9,7 @@ class FindRoom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text("Find a room"),
         elevation: 2,
       ),
       body: Column(

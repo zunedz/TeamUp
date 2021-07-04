@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import "package:firebase_core/firebase_core.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orbital_login/screens/home/chat_room_screen.dart';
+import 'package:orbital_login/screens/home/invite_friend.dart';
 import 'package:orbital_login/screens/home/search_following.dart';
 import 'package:orbital_login/services/authentication/authentication_cubit.dart';
 import 'package:orbital_login/dummy_data/dummy_data.dart';
@@ -51,7 +52,8 @@ class MyApp extends StatelessWidget {
             '/home/find-room': (ctx) => FindRoom(),
             '/home/create-room': (ctx) => CreateNewRoom(),
             '/home/chat-room-screen': (ctx) => ChatRoomScreen(),
-            '/home/search-following-screen': (ctx) => SearchFollowingScreen()
+            '/home/search-following-screen': (ctx) => SearchFollowingScreen(),
+            '/home/invite-friend-screen': (ctx) => InviteFriendScreen(),
           },
         ),
       ),

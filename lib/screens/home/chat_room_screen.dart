@@ -25,6 +25,12 @@ class ChatRoomScreen extends StatelessWidget {
             title: Text("${currentRoom["roomName"]}".toUpperCase()),
             actions: [
               IconButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed('/home/invite-friend-screen');
+                  },
+                  icon: Icon(Icons.add)),
+              IconButton(
                   onPressed: () async {
                     var roomRef = FirebaseFirestore.instance
                         .collection('chatRoom')

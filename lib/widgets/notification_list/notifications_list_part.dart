@@ -13,7 +13,7 @@ class NotificationListPart extends StatelessWidget {
         stream: FirebaseFirestore.instance
             .collection(
                 'appUser/${FirebaseAuth.instance.currentUser!.uid}/Notification')
-            .orderBy("createdAt")
+            .orderBy("createdAt", descending: true)
             .snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
