@@ -79,8 +79,8 @@ class RoomItem extends StatelessWidget {
                     );
 
                     // Navigator.popUntil(context, ModalRoute.withName('/home'));
-                    Navigator.of(context).pushReplacementNamed(
-                        '/home/chat-room-screen',
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/home/chat-room-screen', (route) => false,
                         arguments: roomData.id);
                   } else {
                     await CoolAlert.show(
