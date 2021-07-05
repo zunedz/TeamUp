@@ -8,11 +8,15 @@ class FindRoom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Find a room"),
+        elevation: 2,
+      ),
       body: Column(
         children: [
           Container(
             //search bar
-            margin: EdgeInsets.fromLTRB(10, 40, 10, 0),
+            margin: EdgeInsets.fromLTRB(10, 10, 10, 20),
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: Material(
               color: Colors.grey.shade100,
@@ -61,12 +65,14 @@ class FindRoom extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     var roomItemQuery =
                         futureChatRoomSnapshots.data!.docs[index].data();
+                    print(roomItemQuery['userIdArray']);
                     var currentRoom = new Room(
                         description: roomItemQuery["roomDescription"],
                         gamePlayed: roomItemQuery['gameName'],
                         id: roomItemQuery['roomId'],
                         maxCapacity: roomItemQuery['roomCapacity'],
-                        roomName: roomItemQuery['roomName']);
+                        roomName: roomItemQuery['roomName'],
+                        users: roomItemQuery['userIdArray']);
                     return RoomItem(currentRoom);
                   },
                   itemCount: futureChatRoomSnapshots.data!.docs.length,

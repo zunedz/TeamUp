@@ -50,6 +50,8 @@ class AuthMethods {
         'username': username,
         'avatarUrl':
             "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
+        "followerIdArray": [],
+        "followingIdArray": [],
       });
       print(userCredential.user!.uid);
       User? user = FirebaseAuth.instance.currentUser;

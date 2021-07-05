@@ -115,7 +115,6 @@ class _SignUpState extends State<SignUp> {
                           type: CoolAlertType.error,
                           text: message,
                           title: "Failed to LogIn",
-                          autoCloseDuration: Duration(seconds: 3),
                         );
                         return;
                       }

@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:orbital_login/models/user.dart';
 import 'package:intl/intl.dart';
 import 'package:orbital_login/services/firebaseAuth.dart';
 import 'package:orbital_login/widgets/loadingScreen.dart';
-import 'package:provider/provider.dart';
 
 class ProfilePagePart extends StatelessWidget {
   @override
@@ -90,14 +89,22 @@ class ProfilePagePart extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      DateFormat('dd-MM-yyyy').format(
-                          DateTime.parse(
-                              appUser["createdAt"].toDate().toString())),
+                      DateFormat('dd-MM-yyyy').format(DateTime.parse(
+                          appUser["createdAt"].toDate().toString())),
                       style: TextStyle(fontSize: 20),
                     ),
                     SizedBox(height: 30),
                     InkWell(
-                      onTap: () => AuthMethods().signOut(context),
+                      onTap: () {
+                        CoolAlert.show(
+                          context: ctx,
+                          type: CoolAlertType.confirm,
+                          cancelBtnText: "Cancel",
+                          onCancelBtnTap: () => Navigator.of(context).pop(),
+                          confirmBtnText: "Log Out",
+                          onConfirmBtnTap: () => AuthMethods().signOut(context),
+                        );
+                      },
                       child: Text(
                         "Sign Out",
                         style: TextStyle(

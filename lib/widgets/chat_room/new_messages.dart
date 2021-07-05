@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:orbital_login/models/appuser_function.dart';
 
 class NewMessages extends StatefulWidget {
   final currentRoom;
@@ -11,6 +12,8 @@ class NewMessages extends StatefulWidget {
 
 class _NewMessagesState extends State<NewMessages> {
   var chatInputController = new TextEditingController();
+  var appUser = AppUserFunction();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,21 +33,25 @@ class _NewMessagesState extends State<NewMessages> {
           IconButton(
             onPressed: chatInputController.text.trim() == ""
                 ? null
-                : () {
+                : () async {
+                    String userName = await appUser.getUserUsername();
                     FirebaseFirestore.instance
                         .collection(
                             'chatRoom/${widget.currentRoom["roomId"]}/chats')
                         .add(
                       {
                         "text": chatInputController.text,
-                        "createdAt": Timestamp.now()
+                        "createdAt": Timestamp.now(),
+                        "userId": appUser.getUserId(),
+                        "username": userName,
+                        "type": "message",
                       },
                     );
                     FocusScope.of(context).unfocus();
                     chatInputController.clear();
                   },
             icon: Icon(Icons.send),
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).accentColor,
           )
         ],
       ),

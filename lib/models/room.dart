@@ -1,13 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:orbital_login/models/user.dart';
 
-import 'game.dart';
-
 class Room with ChangeNotifier {
   final String? id;
   final String? roomName;
   final int? maxCapacity;
-  List<AppUser> users = [];
+  List<dynamic>? users = [];
   String? gamePlayed;
   String? description;
 
@@ -17,11 +15,11 @@ class Room with ChangeNotifier {
     @required this.description,
     @required this.gamePlayed,
     @required this.maxCapacity,
+    @required this.users,
   });
 
   bool addUser(AppUser newUser) {
-    if (users.length < maxCapacity!) {
-      users.add(newUser);
+    if (users!.length < maxCapacity!) {
       notifyListeners();
       return true;
     } else
@@ -29,7 +27,6 @@ class Room with ChangeNotifier {
   }
 
   void removeUser(String userId) {
-    users.removeWhere((element) => element.id == userId);
     notifyListeners();
   }
 }
