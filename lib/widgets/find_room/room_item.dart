@@ -77,7 +77,8 @@ class RoomItem extends StatelessWidget {
                         "type": "join",
                       },
                     );
-                    Navigator.popUntil(context, ModalRoute.withName('/home'));
+
+                    // Navigator.popUntil(context, ModalRoute.withName('/home'));
                     Navigator.of(context).pushReplacementNamed(
                         '/home/chat-room-screen',
                         arguments: roomData.id);
