@@ -47,6 +47,7 @@ class _FloatingMenuState extends State<FloatingMenu>
       ),
     );
   }
+
   Widget buttonInvite() {
     return Container(
       child: FloatingActionButton(
@@ -55,6 +56,7 @@ class _FloatingMenuState extends State<FloatingMenu>
       ),
     );
   }
+
   Widget buttonWrite() {
     return Container(
       child: FloatingActionButton(
@@ -63,16 +65,15 @@ class _FloatingMenuState extends State<FloatingMenu>
       ),
     );
   }
-   Widget buttonWrite() {
+
+  Widget buttonWrite() {
     return Container(
       child: FloatingActionButton(
-        onPressed: animate,
-        child: AnimatedIcon(icon:AnimatedIcons.menu_close,progress:_animationIcon!)
-      ),
+          onPressed: animate,
+          child: AnimatedIcon(
+              icon: AnimatedIcons.menu_close, progress: _animationIcon!)),
     );
   }
-  
- 
 
   @override
   Widget build(BuildContext context) {
