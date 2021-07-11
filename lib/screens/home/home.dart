@@ -141,6 +141,12 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
+      floatingActionButton: _selectedIndex != 0
+          ? null
+          : FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {},
+            ),
     );
   }
 }
