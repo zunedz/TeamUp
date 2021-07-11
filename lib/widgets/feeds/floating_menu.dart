@@ -11,7 +11,8 @@ class _FloatingMenuState extends State<FloatingMenu>
     with SingleTickerProviderStateMixin {
   bool isOpened = false;
   AnimationController? _animationController;
-  Animation<Color>? _buttonColor;
+  Animation<Color?>? _buttonColor;
+  Animation<Color?>? _foregroundColor;
   Animation<double>? _animationIcon;
   Animation<double>? _translateButton;
   Curve _curve = Curves.easeOut;
@@ -30,6 +31,14 @@ class _FloatingMenuState extends State<FloatingMenu>
         CurvedAnimation(
             parent: _animationController!,
             curve: Interval(0, 0.75, curve: _curve)));
+    _buttonColor = ColorTween(begin: Colors.purpleAccent, end: Colors.white)
+        .animate(CurvedAnimation(
+            parent: _animationController!,
+            curve: Interval(0, 1, curve: Curves.linear)));
+    _foregroundColor = ColorTween(begin: Colors.white, end: Colors.purpleAccent)
+        .animate(CurvedAnimation(
+            parent: _animationController!,
+            curve: Interval(0, 1, curve: Curves.linear)));
     super.initState();
   }
 
@@ -39,18 +48,10 @@ class _FloatingMenuState extends State<FloatingMenu>
     super.dispose();
   }
 
-  Widget buttonAdd() {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-
   Widget buttonInvite() {
     return Container(
       child: FloatingActionButton(
+        elevation: 0,
         onPressed: () {},
         child: Icon(Icons.group_add),
       ),
@@ -60,19 +61,31 @@ class _FloatingMenuState extends State<FloatingMenu>
   Widget buttonWrite() {
     return Container(
       child: FloatingActionButton(
+        elevation: 0,
         onPressed: () {},
         child: Icon(Icons.edit),
       ),
     );
   }
 
-  Widget buttonWrite() {
+  Widget buttonToggle() {
     return Container(
       child: FloatingActionButton(
+          elevation: 0,
+          backgroundColor: _buttonColor!.value,
+          foregroundColor: _foregroundColor!.value,
           onPressed: animate,
           child: AnimatedIcon(
               icon: AnimatedIcons.menu_close, progress: _animationIcon!)),
     );
+  }
+
+  animate() {
+    if (!isOpened) {
+      _animationController!.forward();
+    } else
+      _animationController!.reverse();
+    isOpened = !isOpened;
   }
 
   @override
@@ -82,9 +95,15 @@ class _FloatingMenuState extends State<FloatingMenu>
       children: [
         Transform(
           transform:
-              Matrix4.translationValues(0, _translateButton.value * 3, 0),
-          child: buttonAdd(),
-        )
+              Matrix4.translationValues(0, _translateButton!.value * 2, 0),
+          child: buttonWrite(),
+        ),
+        Transform(
+          transform:
+              Matrix4.translationValues(0, _translateButton!.value * 1, 0),
+          child: buttonInvite(),
+        ),
+        buttonToggle()
       ],
     );
   }
