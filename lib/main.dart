@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orbital_login/screens/home/chat_room_screen.dart';
 import 'package:orbital_login/screens/home/invite_friend.dart';
 import 'package:orbital_login/screens/home/search_following.dart';
+import 'package:orbital_login/screens/home/write_post_screen.dart';
 import 'package:orbital_login/services/authentication/authentication_cubit.dart';
 import 'package:orbital_login/dummy_data/dummy_data.dart';
 import 'package:orbital_login/screens/auth/reset_password.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
             '/home/chat-room-screen': (ctx) => ChatRoomScreen(),
             '/home/search-following-screen': (ctx) => SearchFollowingScreen(),
             '/home/invite-friend-screen': (ctx) => InviteFriendScreen(),
+            '/home/write-post-screen': (ctx) => WritePostScreen(),
           },
         ),
       ),

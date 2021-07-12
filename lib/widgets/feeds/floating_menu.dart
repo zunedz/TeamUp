@@ -51,6 +51,7 @@ class _FloatingMenuState extends State<FloatingMenu>
   Widget buttonInvite() {
     return Container(
       child: FloatingActionButton(
+        heroTag: 'btn1',
         elevation: 0,
         onPressed: () {},
         child: Icon(Icons.group_add),
@@ -61,8 +62,11 @@ class _FloatingMenuState extends State<FloatingMenu>
   Widget buttonWrite() {
     return Container(
       child: FloatingActionButton(
+        heroTag: 'btn2',
         elevation: 0,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed('/home/write-post-screen');
+        },
         child: Icon(Icons.edit),
       ),
     );
@@ -71,6 +75,7 @@ class _FloatingMenuState extends State<FloatingMenu>
   Widget buttonToggle() {
     return Container(
       child: FloatingActionButton(
+          heroTag: 'btn3',
           elevation: 0,
           backgroundColor: _buttonColor!.value,
           foregroundColor: _foregroundColor!.value,
