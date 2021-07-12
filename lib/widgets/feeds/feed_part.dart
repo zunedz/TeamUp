@@ -12,12 +12,27 @@ class FeedPart extends StatelessWidget {
         children: [
           Expanded(
             child: StreamBuilder(
-                stream:
-                    FirebaseFirestore.instance.collection('post').snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection('post')
+                    .orderBy('createdAt', descending: true)
+                    .snapshots(),
                 builder: (context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         postSnapshot) {
-                  if (postSnapshot.connectionState == ConnectionState.waiting) {
+                  if (postSnapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: postSnapshot.data!.docs.length,
+                        itemBuilder: (ctx, index) {
+                          var postData = postSnapshot.data!.docs[index].data();
+                          var currentPost = Post(
+                              createdAt: postData['createdAt'],
+                              likesArray: postData['likesArray'],
+                              postId: postData['postId'],
+                              senderId: postData['senderId'],
+                              text: postData['text']);
+                          return PostItem(currentPost);
+                        });
+                  } else {
                     return ListView(
                       children: [
                         SkeletonAnimation(
@@ -28,18 +43,6 @@ class FeedPart extends StatelessWidget {
                       ],
                     );
                   }
-                  return ListView.builder(
-                      itemCount: postSnapshot.data!.docs.length,
-                      itemBuilder: (ctx, index) {
-                        var postData = postSnapshot.data!.docs[index].data();
-                        var currentPost = Post(
-                            createdAt: postData['createdAt'],
-                            likesArray: postData['likesArray'],
-                            postId: postData['postId'],
-                            senderId: postData['senderId'],
-                            text: postData['text']);
-                        return PostItem(currentPost);
-                      });
                 }),
           ),
         ],
