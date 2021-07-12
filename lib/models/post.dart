@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 class Post {
@@ -9,8 +10,8 @@ class Post {
       required this.text});
 
   String postId;
-  DateTime createdAt;
+  Timestamp createdAt;
   String text;
   String senderId;
-  List<String> likesArray;
+  List<dynamic> likesArray;
 }

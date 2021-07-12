@@ -2,6 +2,7 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:orbital_login/services/firebaseAuth.dart';
+import 'package:orbital_login/widgets/feeds/feed_part.dart';
 import 'package:orbital_login/widgets/feeds/floating_menu.dart';
 import 'package:orbital_login/widgets/following_list/following_list_part.dart';
 import 'package:orbital_login/widgets/notification_list/notifications_list_part.dart';
@@ -43,7 +44,7 @@ class _HomeState extends State<Home> {
   Widget bodyFunction() {
     switch (_selectedIndex) {
       case 0:
-        return Container(color: Colors.white);
+        return FeedPart();
 
       case 1:
         return NotificationListPart();
