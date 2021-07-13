@@ -45,7 +45,8 @@ class _WritePostScreenState extends State<WritePostScreen> {
                         'text': _textEditingController.text,
                         'senderId': FirebaseAuth.instance.currentUser!.uid,
                         'createdAt': Timestamp.now(),
-                        'likesArray': []
+                        'likesArray': [],
+                        'dislikesArray': []
                       });
                       Navigator.of(context).pop();
                     },

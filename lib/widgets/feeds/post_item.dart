@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:orbital_login/helpers/post.dart';
 import 'package:orbital_login/models/post.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostItem extends StatelessWidget {
@@ -31,102 +34,156 @@ class PostItem extends StatelessWidget {
             builder: (context,
                 AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
                     postSnapshot) {
+              if (postSnapshot.connectionState == ConnectionState.waiting) {
+                return SkeletonAnimation(
+                  child: Container(
+                    width: c_width,
+                    height: c_width * 0.4,
+                    margin: EdgeInsets.all(20),
+                    color: Colors.grey.shade50,
+                  ),
+                );
+              }
+              var likesArray = postSnapshot.data!['likesArray'];
+              var dislikesArray = postSnapshot.data!['dislikesArray'];
+              var userId = FirebaseAuth.instance.currentUser!.uid;
+
               return Container(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Column(
                   children: [
-                    userSnapshot.hasData
-                        ? CircleAvatar(
-                            radius: 30,
-                            child: Image.network(
-                              userSnapshot.data!["avatarUrl"],
-                            ))
-                        : CircleAvatar(
-                            radius: 30,
-                          ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        userSnapshot.hasData
+                            ? Container(
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          userSnapshot.data!['avatarUrl']),
+                                      fit: BoxFit.cover),
+                                ),
+                              )
+                            : CircleAvatar(
+                                radius: 30,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              userSnapshot.hasData
-                                  ? userSnapshot.data!['username']
-                                  : "",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            Row(
+                              children: [
+                                Text(
+                                  userSnapshot.hasData
+                                      ? userSnapshot.data!['username']
+                                      : "",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  timeago.format(
+                                    DateTime.parse(
+                                        post.createdAt.toDate().toString()),
+                                    locale: 'en_short',
+                                  ),
+                                  style: TextStyle(color: Colors.grey),
+                                )
+                              ],
+                            ),
+                            Container(
+                              width: c_width,
+                              child: Text(
+                                post.text,
+                                maxLines: 1000,
+                                softWrap: true,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 16),
+                              ),
                             ),
                             SizedBox(
-                              width: 10,
+                              height: 5,
                             ),
-                            Text(
-                              timeago.format(
-                                DateTime.parse(
-                                    post.createdAt.toDate().toString()),
-                                locale: 'en_short',
-                              ),
-                              style: TextStyle(color: Colors.grey),
-                            )
+                            Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          if (isLiked(likesArray, userId))
+                                            retractResponse(
+                                                post.postId, userId);
+                                          else
+                                            likePost(post.postId, userId);
+                                        },
+                                        icon: Icon(
+                                          EvilIcons.arrow_up,
+                                          color: isLiked(likesArray, userId)
+                                              ? Theme.of(context).accentColor
+                                              : Colors.grey.shade600,
+                                          size: 30,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        (likesArray.length -
+                                                dislikesArray.length)
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.grey.shade600,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          if (isDisliked(dislikesArray, userId))
+                                            retractResponse(
+                                                post.postId, userId);
+                                          else
+                                            dislikePost(post.postId, userId);
+                                        },
+                                        icon: Icon(
+                                          EvilIcons.arrow_down,
+                                          color:
+                                              isDisliked(dislikesArray, userId)
+                                                  ? Colors.red
+                                                  : Colors.grey.shade600,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: c_width * 0.3,
+                                  ),
+                                  Icon(
+                                    EvilIcons.comment,
+                                    color: Colors.grey.shade600,
+                                    size: 30,
+                                  )
+                                ])
                           ],
                         ),
-                        Container(
-                          width: c_width,
-                          child: Text(
-                            post.text,
-                            maxLines: 1000,
-                            softWrap: true,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    EvilIcons.arrow_up,
-                                    color: Colors.grey.shade600,
-                                    size: 30,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    post.likesArray.length.toString(),
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey.shade600,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    EvilIcons.arrow_down,
-                                    color: Colors.grey.shade600,
-                                    size: 30,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: c_width * 0.3,
-                              ),
-                              Icon(
-                                EvilIcons.comment,
-                                color: Colors.grey.shade600,
-                                size: 30,
-                              )
-                            ])
                       ],
                     ),
+                    Divider(
+                      color: Colors.grey,
+                    )
                   ],
                 ),
               );
