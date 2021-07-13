@@ -121,11 +121,8 @@ class PostItem extends StatelessWidget {
                                     children: [
                                       IconButton(
                                         onPressed: () {
-                                          if (isLiked(likesArray, userId))
-                                            retractResponse(
-                                                post.postId, userId);
-                                          else
-                                            likePost(post.postId, userId);
+                                          likePost(dislikesArray, likesArray,
+                                              post.postId, userId);
                                         },
                                         icon: Icon(
                                           EvilIcons.arrow_up,
@@ -152,11 +149,8 @@ class PostItem extends StatelessWidget {
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          if (isDisliked(dislikesArray, userId))
-                                            retractResponse(
-                                                post.postId, userId);
-                                          else
-                                            dislikePost(post.postId, userId);
+                                          dislikePost(likesArray, dislikesArray,
+                                              post.postId, userId);
                                         },
                                         icon: Icon(
                                           EvilIcons.arrow_down,
