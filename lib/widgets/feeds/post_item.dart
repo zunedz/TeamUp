@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital_login/helpers/post.dart';
 import 'package:orbital_login/models/post.dart';
+import 'package:orbital_login/widgets/loadingScreen.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -34,11 +35,11 @@ class PostItem extends StatelessWidget {
             builder: (context,
                 AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
                     postSnapshot) {
-              if (postSnapshot.connectionState == ConnectionState.waiting) {
+              if (!postSnapshot.hasData) {
                 return SkeletonAnimation(
                   child: Container(
                     width: c_width,
-                    height: c_width * 0.4,
+                    height: c_width * 0.6,
                     margin: EdgeInsets.all(20),
                     color: Colors.grey.shade50,
                   ),
