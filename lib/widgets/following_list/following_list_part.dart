@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital_login/widgets/following_list/following_list_item.dart';
 import 'package:orbital_login/widgets/loadingScreen.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 class FollowingListPart extends StatelessWidget {
   @override
@@ -20,8 +21,16 @@ class FollowingListPart extends StatelessWidget {
                     AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
                         userSnapshot) {
                   if (userSnapshot.connectionState == ConnectionState.waiting) {
-                    return LoadingScreen();
+                    return SkeletonAnimation(
+                      child: Container(
+                        width: 200,
+                        height: 200 * 0.4,
+                        margin: EdgeInsets.all(20),
+                        color: Colors.grey.shade50,
+                      ),
+                    );
                   }
+
                   var followingIdArray = userSnapshot.data!['followingIdArray'];
                   print(followingIdArray);
                   return ListView.builder(
@@ -39,10 +48,14 @@ class FollowingListPart extends StatelessWidget {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return ListTile(
-                                leading: CircularProgressIndicator(
-                                  color: Theme.of(context).accentColor,
+                                  leading: SkeletonAnimation(
+                                child: Container(
+                                  width: 200,
+                                  height: 200 * 0.4,
+                                  margin: EdgeInsets.all(20),
+                                  color: Colors.grey.shade50,
                                 ),
-                              );
+                              ));
                             }
                             return FollowingListItem(
                                 snapshot.data!['avatarUrl'],
