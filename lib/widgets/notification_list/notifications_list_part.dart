@@ -5,6 +5,7 @@ import 'package:orbital_login/widgets/loadingScreen.dart';
 import 'package:orbital_login/widgets/notification_list/following_notification_item.dart';
 import 'package:orbital_login/widgets/notification_list/invitation_notification_item.dart';
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationListPart extends StatelessWidget {
   @override
@@ -31,19 +32,21 @@ class NotificationListPart extends StatelessWidget {
                       if (currentNotification["notificationType"] ==
                           "followingNotification") {
                         return FollowingNotificationItem(
-                            DateFormat('dd-MM-yyyy').format(DateTime.parse(
-                                currentNotification["createdAt"]
+                            timeago.format(
+                                DateTime.parse(currentNotification["createdAt"]
                                     .toDate()
-                                    .toString())),
+                                    .toString()),
+                                locale: 'en_short'),
                             currentNotification["senderId"],
                             currentNotification["senderName"]);
                       }
 
                       return InvitationNotificationItem(
-                          DateFormat('dd-MM-yyyy').format(DateTime.parse(
-                              currentNotification["createdAt"]
+                          timeago.format(
+                              DateTime.parse(currentNotification["createdAt"]
                                   .toDate()
-                                  .toString())),
+                                  .toString()),
+                              locale: 'en_short'),
                           currentNotification["senderId"],
                           currentNotification["senderName"],
                           currentNotification["roomId"]);

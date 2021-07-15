@@ -39,6 +39,9 @@ class ReplySectionScreen extends StatelessWidget {
                       replySnapshot) {
                 if (replySnapshot.hasData) {
                   var replyList = replySnapshot.data!.docs;
+                  replyList.sort((a, b) => helperFunction()
+                      .getLikes(b)
+                      .compareTo(helperFunction().getLikes(a)));
 
                   return ListView.builder(
                     itemBuilder: (ctx, index) {
@@ -75,5 +78,11 @@ class ReplySectionScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class helperFunction {
+  int getLikes(var a) {
+    return a.data()['likesArray'].length - a.data()['dislikesArray'].length;
   }
 }

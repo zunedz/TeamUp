@@ -19,7 +19,15 @@ class SearchFollowingItem extends StatelessWidget {
         builder: (context,
             AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
           return ListTile(
-            leading: Image.network(imageUrl),
+            leading: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    image: NetworkImage(imageUrl), fit: BoxFit.cover),
+              ),
+            ),
             title: Text(userName),
             trailing: TextButton(
               child: Text("Follow"),
