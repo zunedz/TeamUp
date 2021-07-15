@@ -39,7 +39,10 @@ class ProfilePagePart extends StatelessWidget {
                     width: 200.0,
                     height: 200.0,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed('/home/image-capture-screen');
+                      },
                     ),
                   ),
                 ),

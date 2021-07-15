@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import "package:firebase_core/firebase_core.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orbital_login/screens/home/chat_room_screen.dart';
+import 'package:orbital_login/screens/home/image_capture_screen.dart';
 import 'package:orbital_login/screens/home/invite_friend.dart';
 import 'package:orbital_login/screens/home/reply_Section.dart';
 import 'package:orbital_login/screens/home/search_following.dart';
@@ -59,7 +60,8 @@ class MyApp extends StatelessWidget {
             '/home/invite-friend-screen': (ctx) => InviteFriendScreen(),
             '/home/write-post-screen': (ctx) => WritePostScreen(),
             '/home/reply-section-screen': (ctx) => ReplySectionScreen(),
-            '/home/write-reply-screen': (ctx) => WriteReplyScreen()
+            '/home/write-reply-screen': (ctx) => WriteReplyScreen(),
+            '/home/image-capture-screen': (ctx) => ImageCapture(),
           },
         ),
       ),
