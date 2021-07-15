@@ -7,10 +7,12 @@ import 'package:orbital_login/models/post.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class PostItem extends StatelessWidget {
-  PostItem(this.post);
+class ReplyItem extends StatelessWidget {
+  ReplyItem(this.post, this.replyingTo, this.currentRef);
 
   final Post post;
+  final String replyingTo;
+  final String currentRef;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class PostItem extends StatelessWidget {
                 userSnapshot) {
           return StreamBuilder(
             stream: FirebaseFirestore.instance
-                .collection('post')
+                .collection('$currentRef/replies')
                 .doc(post.postId)
                 .snapshots(),
             builder: (context,
@@ -165,25 +167,11 @@ class PostItem extends StatelessWidget {
                                   SizedBox(
                                     width: c_width * 0.3,
                                   ),
-                                  IconButton(
-                                      onPressed: () => Navigator.of(context)
-                                              .pushNamed(
-                                                  '/home/reply-section-screen',
-                                                  arguments: {
-                                                'post': post,
-                                                'senderName': userSnapshot
-                                                    .data!['username'],
-                                                'postRef': FirebaseFirestore
-                                                    .instance
-                                                    .collection('post')
-                                                    .doc(post.postId)
-                                                    .path
-                                              }),
-                                      icon: Icon(
-                                        EvilIcons.comment,
-                                        color: Colors.grey.shade600,
-                                        size: 30,
-                                      ))
+                                  Icon(
+                                    EvilIcons.comment,
+                                    color: Colors.grey.shade600,
+                                    size: 30,
+                                  )
                                 ])
                           ],
                         ),

@@ -4,8 +4,10 @@ import "package:firebase_core/firebase_core.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orbital_login/screens/home/chat_room_screen.dart';
 import 'package:orbital_login/screens/home/invite_friend.dart';
+import 'package:orbital_login/screens/home/reply_Section.dart';
 import 'package:orbital_login/screens/home/search_following.dart';
 import 'package:orbital_login/screens/home/write_post_screen.dart';
+import 'package:orbital_login/screens/home/write_reply_screen.dart';
 import 'package:orbital_login/services/authentication/authentication_cubit.dart';
 import 'package:orbital_login/dummy_data/dummy_data.dart';
 import 'package:orbital_login/screens/auth/reset_password.dart';
@@ -56,6 +58,8 @@ class MyApp extends StatelessWidget {
             '/home/search-following-screen': (ctx) => SearchFollowingScreen(),
             '/home/invite-friend-screen': (ctx) => InviteFriendScreen(),
             '/home/write-post-screen': (ctx) => WritePostScreen(),
+            '/home/reply-section-screen': (ctx) => ReplySectionScreen(),
+            '/home/write-reply-screen': (ctx) => WriteReplyScreen()
           },
         ),
       ),
