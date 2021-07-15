@@ -13,7 +13,17 @@ class ReplySectionScreen extends StatelessWidget {
     Post post = args['post'];
     String senderName = args['senderName'];
     String currentRef = args['postRef'];
+
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.reply),
+        onPressed: () => Navigator.of(context)
+            .pushNamed('/home/write-reply-screen', arguments: {
+          'post': post,
+          'currentRef': currentRef,
+          'replyingTo': senderName
+        }),
+      ),
       appBar: AppBar(
         title: Text("Reply"),
       ),
@@ -22,7 +32,7 @@ class ReplySectionScreen extends StatelessWidget {
           Expanded(
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection('$currentRef/replies')
+                  .collection('$currentRef/${post.postId}/replies')
                   .snapshots(),
               builder: (context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
@@ -33,7 +43,7 @@ class ReplySectionScreen extends StatelessWidget {
                   return ListView.builder(
                     itemBuilder: (ctx, index) {
                       if (index == 0) {
-                        return ReplyItemMain(post);
+                        return ReplyItemMain(post, currentRef);
                       } else {
                         var currentPost = replyList[index - 1].data();
                         Post currentReply = Post(
@@ -42,7 +52,8 @@ class ReplySectionScreen extends StatelessWidget {
                             postId: currentPost['postId'],
                             senderId: currentPost['senderId'],
                             text: currentPost['text']);
-                        return ReplyItem(currentReply, senderName, currentRef);
+                        return ReplyItem(currentReply, senderName,
+                            '$currentRef/${post.postId}');
                       }
                     },
                     itemCount: replyList.length + 1,
@@ -61,16 +72,6 @@ class ReplySectionScreen extends StatelessWidget {
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                  onPressed: () => Navigator.of(context).pushNamed(
-                      '/home/write-reply-screen',
-                      arguments: {'post': post, 'currentRef': currentRef}),
-                  child: Text("reply"))
-            ],
-          )
         ],
       ),
     );

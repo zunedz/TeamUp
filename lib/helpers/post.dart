@@ -8,8 +8,10 @@ bool isDisliked(List<dynamic> dislikesArray, String userId) {
   return dislikesArray.contains(userId);
 }
 
-Future<void> retractResponse(String postId, String userId) async {
-  var postRef = FirebaseFirestore.instance.collection('post').doc(postId);
+Future<void> retractResponse(
+    String postId, String userId, String currentRef) async {
+  var postRef =
+      FirebaseFirestore.instance.collection('$currentRef').doc(postId);
 
   await postRef.update({
     "likesArray": FieldValue.arrayRemove([userId]),
@@ -18,11 +20,12 @@ Future<void> retractResponse(String postId, String userId) async {
 }
 
 Future<void> likePost(List<dynamic> dislikesArray, List<dynamic> likesArray,
-    String postId, String userId) async {
-  var postRef = FirebaseFirestore.instance.collection('post').doc(postId);
+    String postId, String userId, String currentRef) async {
+  var postRef =
+      FirebaseFirestore.instance.collection('$currentRef').doc(postId);
 
   if (isLiked(likesArray, userId)) {
-    await retractResponse(postId, userId);
+    await retractResponse(postId, userId, currentRef);
     return;
   } else if (isDisliked(dislikesArray, userId)) {
     await postRef.update({
@@ -37,11 +40,12 @@ Future<void> likePost(List<dynamic> dislikesArray, List<dynamic> likesArray,
 }
 
 Future<void> dislikePost(List<dynamic> likesArray, List<dynamic> dislikesArray,
-    String postId, String userId) async {
-  var postRef = FirebaseFirestore.instance.collection('post').doc(postId);
+    String postId, String userId, String currentRef) async {
+  var postRef =
+      FirebaseFirestore.instance.collection('$currentRef').doc(postId);
 
   if (isDisliked(dislikesArray, userId)) {
-    await retractResponse(postId, userId);
+    await retractResponse(postId, userId, currentRef);
     return;
   } else if (isLiked(likesArray, userId)) {
     await postRef.update({

@@ -100,6 +100,22 @@ class ReplyItem extends StatelessWidget {
                                 )
                               ],
                             ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Replying to ",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                Text(
+                                  replyingTo,
+                                  style: TextStyle(
+                                      color: Theme.of(context).accentColor),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
                             Container(
                               width: c_width,
                               child: Text(
@@ -110,9 +126,9 @@ class ReplyItem extends StatelessWidget {
                                     fontWeight: FontWeight.w500, fontSize: 16),
                               ),
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
+                            // SizedBox(
+                            //   height: 5,
+                            // ),
                             Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
@@ -122,8 +138,12 @@ class ReplyItem extends StatelessWidget {
                                     children: [
                                       IconButton(
                                         onPressed: () {
-                                          likePost(dislikesArray, likesArray,
-                                              post.postId, userId);
+                                          likePost(
+                                              dislikesArray,
+                                              likesArray,
+                                              post.postId,
+                                              userId,
+                                              '$currentRef/replies');
                                         },
                                         icon: Icon(
                                           EvilIcons.arrow_up,
@@ -150,8 +170,12 @@ class ReplyItem extends StatelessWidget {
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          dislikePost(likesArray, dislikesArray,
-                                              post.postId, userId);
+                                          dislikePost(
+                                              likesArray,
+                                              dislikesArray,
+                                              post.postId,
+                                              userId,
+                                              '$currentRef/replies');
                                         },
                                         icon: Icon(
                                           EvilIcons.arrow_down,
@@ -167,10 +191,20 @@ class ReplyItem extends StatelessWidget {
                                   SizedBox(
                                     width: c_width * 0.3,
                                   ),
-                                  Icon(
-                                    EvilIcons.comment,
-                                    color: Colors.grey.shade600,
-                                    size: 30,
+                                  IconButton(
+                                    onPressed: () => Navigator.of(context)
+                                        .pushNamed('/home/reply-section-screen',
+                                            arguments: {
+                                          'post': post,
+                                          'senderName':
+                                              userSnapshot.data!['username'],
+                                          'postRef': '$currentRef/replies'
+                                        }),
+                                    icon: Icon(
+                                      EvilIcons.comment,
+                                      color: Colors.grey.shade600,
+                                      size: 30,
+                                    ),
                                   )
                                 ])
                           ],

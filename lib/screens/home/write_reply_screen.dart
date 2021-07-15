@@ -15,11 +15,17 @@ class _WriteReplyScreenState extends State<WriteReplyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Post post = ModalRoute.of(context)!.settings.arguments as Post;
+    Map args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    Post post = args['post'];
+    String replyingTo = args['replyingTo'];
+    String currentRef = args['currentRef'];
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        title: Text('reply to $replyingTo'),
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: Navigator.of(context).pop,
@@ -42,7 +48,7 @@ class _WriteReplyScreenState extends State<WriteReplyScreen> {
                   ? () {}
                   : () async {
                       var postRef = FirebaseFirestore.instance
-                          .collection('post/${post.postId}/replies')
+                          .collection('$currentRef/${post.postId}/replies')
                           .doc();
                       await postRef.set({
                         'postId': postRef.id,

@@ -121,7 +121,7 @@ class PostItem extends StatelessWidget {
                                       IconButton(
                                         onPressed: () {
                                           likePost(dislikesArray, likesArray,
-                                              post.postId, userId);
+                                              post.postId, userId, 'post');
                                         },
                                         icon: Icon(
                                           EvilIcons.arrow_up,
@@ -149,7 +149,7 @@ class PostItem extends StatelessWidget {
                                       IconButton(
                                         onPressed: () {
                                           dislikePost(likesArray, dislikesArray,
-                                              post.postId, userId);
+                                              post.postId, userId, 'post');
                                         },
                                         icon: Icon(
                                           EvilIcons.arrow_down,
@@ -173,11 +173,7 @@ class PostItem extends StatelessWidget {
                                                 'post': post,
                                                 'senderName': userSnapshot
                                                     .data!['username'],
-                                                'postRef': FirebaseFirestore
-                                                    .instance
-                                                    .collection('post')
-                                                    .doc(post.postId)
-                                                    .path
+                                                'postRef': 'post'
                                               }),
                                       icon: Icon(
                                         EvilIcons.comment,

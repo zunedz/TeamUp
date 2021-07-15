@@ -17,6 +17,7 @@ class _WritePostScreenState extends State<WritePostScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        title: Text("Write a post"),
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: Navigator.of(context).pop,
