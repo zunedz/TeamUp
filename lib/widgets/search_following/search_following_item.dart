@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:orbital_login/helpers/follow.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 class SearchFollowingItem extends StatelessWidget {
   final String imageUrl;
@@ -11,13 +13,23 @@ class SearchFollowingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: FirebaseFirestore.instance
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
             .collection("appUser")
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .get(),
+            .snapshots(),
         builder: (context,
             AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return SkeletonAnimation(
+              child: Container(
+                width: 200,
+                height: 200 * 0.4,
+                margin: EdgeInsets.all(20),
+                color: Colors.grey.shade50,
+              ),
+            );
+          }
           return ListTile(
             leading: Container(
               width: 60,
@@ -29,36 +41,39 @@ class SearchFollowingItem extends StatelessWidget {
               ),
             ),
             title: Text(userName),
-            trailing: TextButton(
-              child: Text("Follow"),
-              onPressed: () async {
-                String myUserId = FirebaseAuth.instance.currentUser!.uid;
-                await FirebaseFirestore.instance
-                    .collection('appUser')
-                    .doc(myUserId)
-                    .update({
-                  "followingIdArray": FieldValue.arrayUnion([userId]),
-                });
-                await FirebaseFirestore.instance
-                    .collection("appUser")
-                    .doc(userId)
-                    .update({
-                  "followerIdArray": FieldValue.arrayUnion([myUserId])
-                });
-
-                var notificationRef = FirebaseFirestore.instance
-                    .collection("appUser/$userId/Notification");
-
-                var newNotification = notificationRef.doc();
-                await notificationRef.doc(newNotification.id).set({
-                  "createdAt": Timestamp.now(),
-                  "senderName": snapshot.data!["username"],
-                  "docId": newNotification.id,
-                  "senderId": myUserId,
-                  "notificationType": "followingNotification",
-                });
-              },
-            ),
+            trailing: MaterialButton(
+                color: isFollowed(snapshot.data!['followingIdArray'], userId)
+                    ? Theme.of(context).accentColor
+                    : Colors.white,
+                child: isFollowed(snapshot.data!['followingIdArray'], userId)
+                    ? Text(
+                        "Followed",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      )
+                    : isFollowingYou(snapshot.data!['followerIdArray'], userId)
+                        ? Text(
+                            "Follow back",
+                            style: TextStyle(
+                                color: Colors.purpleAccent,
+                                fontWeight: FontWeight.bold),
+                          )
+                        : Text(
+                            "Follow",
+                            style: TextStyle(
+                                color: Colors.purpleAccent,
+                                fontWeight: FontWeight.bold),
+                          ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                onPressed: () {
+                  if (isFollowed(snapshot.data!['followingIdArray'], userId)) {
+                    unfollow(snapshot.data!['userId'], userId);
+                  } else {
+                    follow(snapshot.data!['userId'], userId,
+                        snapshot.data!['username']);
+                  }
+                }),
           );
         });
   }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:orbital_login/widgets/loadingScreen.dart';
 import 'package:orbital_login/widgets/search_following/search_following_item.dart';
@@ -15,6 +16,10 @@ class _SearchFollowingScreenState extends State<SearchFollowingScreen> {
     TextEditingController searchTextController = new TextEditingController();
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Search"),
+        elevation: 0,
+      ),
       body: Container(
         child: Column(
           children: [
@@ -58,17 +63,21 @@ class _SearchFollowingScreenState extends State<SearchFollowingScreen> {
               child: FutureBuilder(
                   future: FirebaseFirestore.instance
                       .collection('appUser')
-                      .where('username', isEqualTo: searchQuery)
+                      .where(
+                        'username',
+                        isEqualTo: searchQuery,
+                      )
                       .get(),
                   builder: (ctx,
                       AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                           futureSnapshots) {
-                    if (futureSnapshots.connectionState ==
-                        ConnectionState.waiting) {
+                    if (!futureSnapshots.hasData) {
                       return LoadingScreen();
                     }
                     var followingList = futureSnapshots.data!.docs;
-                    print(followingList);
+                    followingList.removeWhere((element) =>
+                        element["userId"] ==
+                        FirebaseAuth.instance.currentUser!.uid);
 
                     return ListView.builder(
                       itemBuilder: (ctx, index) {
