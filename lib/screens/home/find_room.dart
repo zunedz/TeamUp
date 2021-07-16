@@ -4,7 +4,14 @@ import 'package:loading_indicator/loading_indicator.dart';
 import 'package:orbital_login/models/room.dart';
 import 'package:orbital_login/widgets/find_room/room_item.dart';
 
-class FindRoom extends StatelessWidget {
+class FindRoom extends StatefulWidget {
+  @override
+  _FindRoomState createState() => _FindRoomState();
+}
+
+class _FindRoomState extends State<FindRoom> {
+  TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,14 +30,16 @@ class FindRoom extends StatelessWidget {
               elevation: 0,
               borderRadius: BorderRadius.all(Radius.circular(30.0)),
               child: TextField(
-                controller: TextEditingController(),
+                controller: _searchController,
                 cursorColor: Colors.purple.shade300,
                 decoration: InputDecoration(
                   hintText: "search game ",
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 32.0, vertical: 14.0),
-                  suffixIcon: Material(
-                    elevation: 5.0,
+                  suffixIcon: InkWell(
+                    onTap: () {
+                      setState(() {});
+                    },
                     borderRadius: BorderRadius.all(Radius.circular(30.0)),
                     child: Icon(
                       Icons.search,
@@ -45,7 +54,14 @@ class FindRoom extends StatelessWidget {
           Expanded(
             //list of rooms
             child: FutureBuilder(
-              future: FirebaseFirestore.instance.collection('chatRoom').get(),
+              future: _searchController.text.trim() == ""
+                  ? FirebaseFirestore.instance.collection('chatRoom').get()
+                  : FirebaseFirestore.instance
+                      .collection('chatRoom')
+                      .where('gameName',
+                          isEqualTo:
+                              _searchController.text.trim().toUpperCase())
+                      .get(),
               builder: (context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                       futureChatRoomSnapshots) {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:orbital_login/widgets/loadingScreen.dart';
 import 'package:orbital_login/widgets/notification_list/following_notification_item.dart';
 import 'package:orbital_login/widgets/notification_list/invitation_notification_item.dart';
@@ -31,25 +32,56 @@ class NotificationListPart extends StatelessWidget {
                       var currentNotification = notificationList[index].data();
                       if (currentNotification["notificationType"] ==
                           "followingNotification") {
-                        return FollowingNotificationItem(
+                        return Slidable(
+                          actionPane: SlidableScrollActionPane(),
+                          actions: [
+                            IconSlideAction(
+                                color: Colors.red,
+                                icon: (Icons.delete),
+                                onTap: () async {
+                                  await FirebaseFirestore.instance
+                                      .collection(
+                                          'appUser/${FirebaseAuth.instance.currentUser!.uid}/Notification')
+                                      .doc(currentNotification['docId'])
+                                      .delete();
+                                })
+                          ],
+                          child: FollowingNotificationItem(
+                              timeago.format(
+                                  DateTime.parse(
+                                      currentNotification["createdAt"]
+                                          .toDate()
+                                          .toString()),
+                                  locale: 'en_short'),
+                              currentNotification["senderId"],
+                              currentNotification["senderName"]),
+                        );
+                      }
+
+                      return Slidable(
+                        actionPane: SlidableScrollActionPane(),
+                        actions: [
+                          IconSlideAction(
+                              color: Colors.red,
+                              icon: (Icons.delete),
+                              onTap: () async {
+                                await FirebaseFirestore.instance
+                                    .collection(
+                                        'appUser/${FirebaseAuth.instance.currentUser!.uid}/Notification')
+                                    .doc(currentNotification['docId'])
+                                    .delete();
+                              })
+                        ],
+                        child: InvitationNotificationItem(
                             timeago.format(
                                 DateTime.parse(currentNotification["createdAt"]
                                     .toDate()
                                     .toString()),
                                 locale: 'en_short'),
                             currentNotification["senderId"],
-                            currentNotification["senderName"]);
-                      }
-
-                      return InvitationNotificationItem(
-                          timeago.format(
-                              DateTime.parse(currentNotification["createdAt"]
-                                  .toDate()
-                                  .toString()),
-                              locale: 'en_short'),
-                          currentNotification["senderId"],
-                          currentNotification["senderName"],
-                          currentNotification["roomId"]);
+                            currentNotification["senderName"],
+                            currentNotification["roomId"]),
+                      );
                     },
                     itemCount: notificationList.length,
                   ),

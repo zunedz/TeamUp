@@ -71,7 +71,7 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
                   TextFormField(
                     validator: (val) => val == null ? "Cannot be empty" : null,
                     onChanged: (value) {
-                      gameName = value.trim();
+                      gameName = value.trim().toUpperCase();
                     },
                     decoration: inputDecoration("Game Name"),
                   ),
