@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import "package:firebase_core/firebase_core.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orbital_login/screens/home/chat_room_screen.dart';
+import 'package:orbital_login/screens/home/image_capture_screen.dart';
 import 'package:orbital_login/screens/home/invite_friend.dart';
+import 'package:orbital_login/screens/home/people_inside_room.dart';
+import 'package:orbital_login/screens/home/reply_Section.dart';
 import 'package:orbital_login/screens/home/search_following.dart';
+import 'package:orbital_login/screens/home/write_post_screen.dart';
+import 'package:orbital_login/screens/home/write_reply_screen.dart';
 import 'package:orbital_login/services/authentication/authentication_cubit.dart';
-import 'package:orbital_login/dummy_data/dummy_data.dart';
 import 'package:orbital_login/screens/auth/reset_password.dart';
 import 'package:orbital_login/screens/auth/signup.dart';
 import 'package:orbital_login/screens/home/create_new_room.dart';
@@ -29,33 +33,32 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthenticationCubit(),
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => roomList),
-          ChangeNotifierProvider(create: (_) => user1)
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primaryColor: Colors.white,
-            accentColor: Colors.purpleAccent,
-            buttonColor: Colors.purpleAccent,
-            fontFamily: "Montserrat",
-          ),
-          initialRoute: '/',
-          routes: {
-            '/': (ctx) => Wrapper(),
-            '/auth/login': (ctx) => LogIn(),
-            '/auth/signup': (ctx) => SignUp(),
-            '/auth/reset-password': (ctx) => ResetPassword(),
-            '/home': (ctx) => Home(),
-            '/home/find-room': (ctx) => FindRoom(),
-            '/home/create-room': (ctx) => CreateNewRoom(),
-            '/home/chat-room-screen': (ctx) => ChatRoomScreen(),
-            '/home/search-following-screen': (ctx) => SearchFollowingScreen(),
-            '/home/invite-friend-screen': (ctx) => InviteFriendScreen(),
-          },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: Colors.white,
+          accentColor: Colors.purpleAccent,
+          buttonColor: Colors.purpleAccent,
+          fontFamily: "Montserrat",
         ),
+        initialRoute: '/',
+        routes: {
+          '/': (ctx) => Wrapper(),
+          '/auth/login': (ctx) => LogIn(),
+          '/auth/signup': (ctx) => SignUp(),
+          '/auth/reset-password': (ctx) => ResetPassword(),
+          '/home': (ctx) => Home(),
+          '/home/find-room': (ctx) => FindRoom(),
+          '/home/create-room': (ctx) => CreateNewRoom(),
+          '/home/chat-room-screen': (ctx) => ChatRoomScreen(),
+          '/home/search-following-screen': (ctx) => SearchFollowingScreen(),
+          '/home/invite-friend-screen': (ctx) => InviteFriendScreen(),
+          '/home/write-post-screen': (ctx) => WritePostScreen(),
+          '/home/reply-section-screen': (ctx) => ReplySectionScreen(),
+          '/home/write-reply-screen': (ctx) => WriteReplyScreen(),
+          '/home/image-capture-screen': (ctx) => ImageCapture(),
+          '/home/people-inside-room': (ctx) => PeopleInsideRoom(),
+        },
       ),
     );
   }
@@ -82,25 +85,6 @@ class Wrapper extends StatelessWidget {
     return screen;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // return MultiProvider(
 //       providers: [

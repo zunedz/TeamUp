@@ -10,11 +10,23 @@ class FollowingListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Image.network(
-        imageUrl,
+      leading: Container(
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image:
+              DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+        ),
       ),
-      title: Text(userName),
-      trailing: Text("offline"),
+      title: Text(
+        userName,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+      ),
+      trailing: Text(
+        "offline",
+        style: TextStyle(color: Colors.grey),
+      ),
     );
   }
 }

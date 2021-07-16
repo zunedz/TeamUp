@@ -13,29 +13,44 @@ class InviteFriendItem extends StatelessWidget {
       this.imageUrl, this.userId, this.userName, this.myUserName, this.roomId);
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Image.network(
-        imageUrl,
-      ),
-      title: Text(userName),
-      trailing: TextButton(
-        child: Text("Invite"),
-        onPressed: () async {
-          var notificationRef = FirebaseFirestore.instance
-              .collection("appUser/$userId/Notification");
-          var notificationId = notificationRef.doc();
-          await notificationRef.doc(notificationId.id).set({
-            "createdAt": Timestamp.now(),
-            "senderName": myUserName,
-            "docId": notificationId.id,
-            "senderId": FirebaseAuth.instance.currentUser!.uid,
-            "notificationType": "invitationNotification",
-            "roomId": roomId
-          });
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Invitation sent!"),
-          ));
-        },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+        leading: Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+                image: NetworkImage(imageUrl), fit: BoxFit.cover),
+          ),
+        ),
+        title: Text(userName),
+        trailing: MaterialButton(
+          color: Theme.of(context).accentColor,
+          child: Text(
+            "Invite",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          onPressed: () async {
+            var notificationRef = FirebaseFirestore.instance
+                .collection("appUser/$userId/Notification");
+            var notificationId = notificationRef.doc();
+            await notificationRef.doc(notificationId.id).set({
+              "createdAt": Timestamp.now(),
+              "senderName": myUserName,
+              "docId": notificationId.id,
+              "senderId": FirebaseAuth.instance.currentUser!.uid,
+              "notificationType": "invitationNotification",
+              "roomId": roomId
+            });
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Invitation sent!"),
+            ));
+          },
+        ),
       ),
     );
   }

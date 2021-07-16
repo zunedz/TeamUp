@@ -77,7 +77,11 @@ class AuthMethods {
     try {
       await _auth.signOut();
       await GoogleSignIn().signOut();
-      Navigator.of(context).pushReplacementNamed('/');
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/',
+        (route) => false,
+      );
+      // Navigator.of(context).pushReplacementNamed('/');
       final snackBar = SnackBar(
         content: Text('Logged out'),
       );

@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:orbital_login/dummy_data/dummy_data.dart';
 import 'package:orbital_login/models/game.dart';
 import 'package:orbital_login/models/notification.dart';
 import 'package:orbital_login/models/room.dart';
@@ -114,7 +113,7 @@ class AppUser with ChangeNotifier {
         id: DateTime.now().toString(),
         maxCapacity: maxcapacity,
         users: []);
-    roomList.addRoom(newRoom);
+
     newRoom.addUser(this);
     isInsideRoom = true;
     currentRoom.add(newRoom);

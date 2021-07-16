@@ -34,12 +34,15 @@ class ProfilePagePart extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   color: Colors.transparent,
                   child: Ink.image(
-                    image: AssetImage('assets/images/default.png'),
+                    image: NetworkImage(appUser["avatarUrl"]),
                     fit: BoxFit.cover,
                     width: 200.0,
                     height: 200.0,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed('/home/image-capture-screen');
+                      },
                     ),
                   ),
                 ),
