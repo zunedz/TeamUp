@@ -22,7 +22,27 @@ class ChatRoomScreen extends StatelessWidget {
         var currentRoom = futureRoomSnapshots.data!;
         return Scaffold(
           appBar: AppBar(
-            title: Text("${currentRoom["roomName"]}".toUpperCase()),
+            title: InkWell(
+              // behavior: HitTestBehavior.opaque,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed('/home/people-inside-room', arguments: {
+                  'userIdArray': futureRoomSnapshots.data!['userIdArray'],
+                  'roomName': futureRoomSnapshots.data!['roomName']
+                });
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 8),
+                      child: Text("${currentRoom["roomName"]}".toUpperCase()),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             actions: [
               IconButton(
                   onPressed: () {

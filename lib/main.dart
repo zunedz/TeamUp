@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orbital_login/screens/home/chat_room_screen.dart';
 import 'package:orbital_login/screens/home/image_capture_screen.dart';
 import 'package:orbital_login/screens/home/invite_friend.dart';
+import 'package:orbital_login/screens/home/people_inside_room.dart';
 import 'package:orbital_login/screens/home/reply_Section.dart';
 import 'package:orbital_login/screens/home/search_following.dart';
 import 'package:orbital_login/screens/home/write_post_screen.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
           '/home/reply-section-screen': (ctx) => ReplySectionScreen(),
           '/home/write-reply-screen': (ctx) => WriteReplyScreen(),
           '/home/image-capture-screen': (ctx) => ImageCapture(),
+          '/home/people-inside-room': (ctx) => PeopleInsideRoom(),
         },
       ),
     );
