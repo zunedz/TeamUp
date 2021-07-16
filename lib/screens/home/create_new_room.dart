@@ -134,10 +134,14 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
                     'roomName': roomName,
                     'userIdArray': [FirebaseAuth.instance.currentUser!.uid],
                   });
-                  Navigator.popUntil(context, ModalRoute.withName('/home'));
-                  Navigator.of(context).pushReplacementNamed(
-                      '/home/chat-room-screen',
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/home/chat-room-screen', (route) => false,
                       arguments: roomRef.id);
+                  // Navigator.of(context).popUntil((route) => false)
+                  // Navigator.popUntil(context, ModalRoute.withName('/home'));
+                  // Navigator.of(context).pushReplacementNamed(
+                  //     '/home/chat-room-screen',
+                  //     arguments: roomRef.id);
                 }
 
                 return;

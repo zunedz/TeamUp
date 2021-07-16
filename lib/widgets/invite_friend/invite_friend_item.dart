@@ -26,8 +26,14 @@ class InviteFriendItem extends StatelessWidget {
           ),
         ),
         title: Text(userName),
-        trailing: TextButton(
-          child: Text("Invite"),
+        trailing: MaterialButton(
+          color: Theme.of(context).accentColor,
+          child: Text(
+            "Invite",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
           onPressed: () async {
             var notificationRef = FirebaseFirestore.instance
                 .collection("appUser/$userId/Notification");
