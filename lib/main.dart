@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import "package:firebase_core/firebase_core.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:orbital_login/screens/auth/waiting_screen.dart';
 import 'package:orbital_login/screens/home/chat_room_screen.dart';
 import 'package:orbital_login/screens/home/image_capture_screen.dart';
 import 'package:orbital_login/screens/home/invite_friend.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
           '/auth/login': (ctx) => LogIn(),
           '/auth/signup': (ctx) => SignUp(),
           '/auth/reset-password': (ctx) => ResetPassword(),
+          '/auth/waiting-screen': (ctx) => WaitingScreen(),
           '/home': (ctx) => Home(),
           '/home/find-room': (ctx) => FindRoom(),
           '/home/create-room': (ctx) => CreateNewRoom(),
@@ -69,7 +71,10 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget screen = _auth.currentUser == null ? LogIn() : Home();
+    Widget screen =
+        (_auth.currentUser == null) || !_auth.currentUser!.emailVerified
+            ? LogIn()
+            : Home();
     print('back to wrapper');
 
     _auth.authStateChanges().listen((User? user) {

@@ -14,6 +14,11 @@ class AuthMethods {
         email: email,
         password: password,
       );
+      print(FirebaseAuth.instance.currentUser!.emailVerified);
+      if (!FirebaseAuth.instance.currentUser!.emailVerified) {
+        FirebaseAuth.instance.signOut();
+        return "Please verify your email";
+      }
       print(userCredential.user!.uid);
       return null;
     } on FirebaseAuthException catch (e) {
@@ -54,8 +59,6 @@ class AuthMethods {
         "followingIdArray": [],
       });
       print(userCredential.user!.uid);
-      User? user = FirebaseAuth.instance.currentUser;
-      if (!user!.emailVerified) user.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         return ('The account already exists for that email.');
