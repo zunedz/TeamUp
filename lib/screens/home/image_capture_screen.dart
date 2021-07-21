@@ -88,14 +88,31 @@ class _ImageCaptureState extends State<ImageCapture> {
             ],
             if (_imageFile != null) ...[
               Image.file(_imageFile!),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  TextButton(
-                    child: Icon(Icons.delete),
-                    onPressed: _clear,
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                child: MaterialButton(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  color: Colors.purpleAccent,
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                        Text("DELETE",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 20))
+                      ],
+                    ),
                   ),
-                ],
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  onPressed: _clear,
+                ),
               ),
               Uploader(_imageFile!)
             ]
@@ -191,9 +208,20 @@ class _UploaderState extends State<Uploader> {
           });
     } else {
       // Allows user to decide when to start the upload
-      return IconButton(
-        icon: Icon(Icons.cloud_upload),
-        onPressed: _startUpload,
+      return Container(
+        padding: const EdgeInsets.all(8.0),
+        child: MaterialButton(
+          padding: EdgeInsets.symmetric(vertical: 15),
+          color: Colors.purpleAccent,
+          child: Text("UPLOAD",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 20)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          onPressed: _startUpload,
+        ),
       );
     }
   }
