@@ -91,6 +91,16 @@ class ReplyItemMain extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
+                    post.imageUrl == "-"
+                        ? Container()
+                        : ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            child: Image.network(post.imageUrl,
+                                fit: BoxFit.fill, width: c_width),
+                          ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       DateFormat().add_yMd().add_jm().format(DateTime.parse(
                             post.createdAt.toDate().toString(),

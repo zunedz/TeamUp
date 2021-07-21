@@ -118,7 +118,8 @@ class _SignUpState extends State<SignUp> {
                         );
                         return;
                       }
-                      Navigator.of(context).pushReplacementNamed('/home');
+                      Navigator.of(context)
+                          .pushReplacementNamed('/auth/waiting-screen');
                     },
                     elevation: 0,
                     height: 50,

@@ -7,13 +7,15 @@ import 'package:flutter/widgets.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ImageCapture extends StatefulWidget {
-  createState() => _ImageCaptureState();
+class PostImagePicker extends StatefulWidget {
+  createState() => _PostImagePickerState();
 }
 
-class _ImageCaptureState extends State<ImageCapture> {
+class _PostImagePickerState extends State<PostImagePicker> {
   /// Active image file
   File? _imageFile;
+
+  Function? setImage;
 
   /// Cropper plugin
   Future<void> _cropImage() async {
@@ -30,10 +32,11 @@ class _ImageCaptureState extends State<ImageCapture> {
       // maxWidth: 512,
       // maxHeight: 512,
     );
-
-    setState(() {
-      _imageFile = cropped ?? _imageFile;
-    });
+    if (cropped != null) {
+      setState(() {
+        _imageFile = cropped;
+      });
+    }
   }
 
   /// Select an image via gallery or camera
@@ -57,6 +60,8 @@ class _ImageCaptureState extends State<ImageCapture> {
 
   @override
   Widget build(BuildContext context) {
+    setImage = ModalRoute.of(context)!.settings.arguments as Function;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Pick a photo"),
@@ -114,7 +119,24 @@ class _ImageCaptureState extends State<ImageCapture> {
                   onPressed: _clear,
                 ),
               ),
-              Uploader(_imageFile!)
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                child: MaterialButton(
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  color: Colors.purpleAccent,
+                  child: Text("USE PHOTO",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 20)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  onPressed: () {
+                    setImage!(_imageFile);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
             ]
           ],
         ),
@@ -213,14 +235,14 @@ class _UploaderState extends State<Uploader> {
         child: MaterialButton(
           padding: EdgeInsets.symmetric(vertical: 15),
           color: Colors.purpleAccent,
-          child: Text("UPLOAD",
+          child: Text("USE PHOTO",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   fontSize: 20)),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
-          onPressed: _startUpload,
+          onPressed: () {},
         ),
       );
     }

@@ -70,7 +70,6 @@ class _WriteReplyScreenState extends State<WriteReplyScreen> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(),
             SizedBox(
               width: 20,
             ),
@@ -92,10 +91,6 @@ class _WriteReplyScreenState extends State<WriteReplyScreen> {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add_photo_alternate),
       ),
     );
   }

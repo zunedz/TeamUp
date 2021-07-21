@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class WritePostScreen extends StatefulWidget {
@@ -11,6 +13,14 @@ class WritePostScreen extends StatefulWidget {
 
 class _WritePostScreenState extends State<WritePostScreen> {
   TextEditingController _textEditingController = TextEditingController();
+  File? _imageFile;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  setImage(imageFile) {
+    setState(() {
+      _imageFile = imageFile;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +51,29 @@ class _WritePostScreenState extends State<WritePostScreen> {
                   : () async {
                       var postRef =
                           FirebaseFirestore.instance.collection('post').doc();
+                      var imageUrl;
+
+                      String filePath = 'postImages/${postRef.id}.png';
+                      if (_imageFile != null) {
+                        await _storage
+                            .ref()
+                            .child(filePath)
+                            .putFile(_imageFile!);
+                        imageUrl = await _storage
+                            .ref()
+                            .child(filePath)
+                            .getDownloadURL();
+                      }
+
                       await postRef.set({
                         'postId': postRef.id,
                         'text': _textEditingController.text,
                         'senderId': FirebaseAuth.instance.currentUser!.uid,
                         'createdAt': Timestamp.now(),
                         'likesArray': [],
-                        'dislikesArray': []
+                        'dislikesArray': [],
+                        'type': "text",
+                        'image': _imageFile == null ? "-" : imageUrl,
                       });
                       Navigator.of(context).pop();
                     },
@@ -58,10 +84,9 @@ class _WritePostScreenState extends State<WritePostScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Row(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(),
             SizedBox(
               width: 20,
             ),
@@ -81,11 +106,19 @@ class _WritePostScreenState extends State<WritePostScreen> {
                 controller: _textEditingController,
               ),
             ),
+            _imageFile != null
+                ? Container(
+                    margin: EdgeInsets.symmetric(vertical: 20),
+                    child: Image.file(_imageFile!))
+                : Container(),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context)
+              .pushNamed('/home/post-image-picker', arguments: setImage);
+        },
         child: Icon(Icons.add_photo_alternate),
       ),
     );

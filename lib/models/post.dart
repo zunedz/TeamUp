@@ -7,11 +7,13 @@ class Post {
       required this.createdAt,
       required this.likesArray,
       required this.senderId,
-      required this.text});
+      required this.text,
+      required this.imageUrl});
 
   String postId;
   Timestamp createdAt;
   String text;
   String senderId;
   List<dynamic> likesArray;
+  String imageUrl;
 }
