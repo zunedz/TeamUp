@@ -53,7 +53,9 @@ class _FloatingMenuState extends State<FloatingMenu>
       child: FloatingActionButton(
         heroTag: 'btn1',
         elevation: 0,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed('/home/share-room');
+        },
         child: Icon(Icons.group_add),
       ),
     );

@@ -9,6 +9,7 @@ import 'package:orbital_login/screens/home/invite_friend.dart';
 import 'package:orbital_login/screens/home/people_inside_room.dart';
 import 'package:orbital_login/screens/home/reply_Section.dart';
 import 'package:orbital_login/screens/home/search_following.dart';
+import 'package:orbital_login/screens/home/share_room_screen.dart';
 import 'package:orbital_login/screens/home/write_post_screen.dart';
 import 'package:orbital_login/screens/home/write_reply_screen.dart';
 import 'package:orbital_login/services/authentication/authentication_cubit.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
           '/home/write-reply-screen': (ctx) => WriteReplyScreen(),
           '/home/image-capture-screen': (ctx) => ImageCapture(),
           '/home/people-inside-room': (ctx) => PeopleInsideRoom(),
+          '/home/share-room': (ctx) => ShareRoom(),
         },
       ),
     );
