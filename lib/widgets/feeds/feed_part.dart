@@ -28,6 +28,9 @@ class FeedPart extends StatelessWidget {
                           var postData = postSnapshot.data!.docs[index].data();
                           if (postData["type"] == "text") {
                             var currentPost = Post(
+                                imageUrl: postData['image'] == null
+                                    ? "-"
+                                    : postData['image'],
                                 createdAt: postData['createdAt'],
                                 likesArray: postData['likesArray'],
                                 postId: postData['postId'],

@@ -50,6 +50,7 @@ class ReplySectionScreen extends StatelessWidget {
                       } else {
                         var currentPost = replyList[index - 1].data();
                         Post currentReply = Post(
+                            imageUrl: "",
                             createdAt: currentPost['createdAt'],
                             likesArray: currentPost['likesArray'],
                             postId: currentPost['postId'],

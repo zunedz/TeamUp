@@ -109,8 +109,16 @@ class PostItem extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: 5,
+                              height: 10,
                             ),
+                            post.imageUrl == "-"
+                                ? Container()
+                                : ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    child: Image.network(post.imageUrl,
+                                        fit: BoxFit.fill, width: c_width),
+                                  ),
                             Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
