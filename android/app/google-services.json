@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "996161654915",
+    "firebase_url": "https://team-up-4784f-default-rtdb.firebaseio.com",
     "project_id": "team-up-4784f",
     "storage_bucket": "team-up-4784f.appspot.com"
   },
@@ -13,6 +14,30 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "996161654915-it78nqv7qi85nsrdlhp8bbub2alct4d6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.orbital_login",
+            "certificate_hash": "44acfd19298dd3798e74c27aafba3ad0dae0c4b9"
+          }
+        },
+        {
+          "client_id": "996161654915-ju44r4r5pjuie31pdg52snba5166d1lm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.orbital_login",
+            "certificate_hash": "7f6dfb5b8a9729b5fcb012a7e9b26e5df8c62700"
+          }
+        },
+        {
+          "client_id": "996161654915-smu7bpn96ddtub8b6fj7j85qme2mfrcm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.orbital_login",
+            "certificate_hash": "fe99374fcd579e8ecb0b5fcc097f5a6f74cd532d"
+          }
+        },
         {
           "client_id": "996161654915-qarco8or02v225tasv9jorblbobcl2lv.apps.googleusercontent.com",
           "client_type": 3
