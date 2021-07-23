@@ -82,8 +82,8 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
                     validator: (val) {
                       if (val == null || val == "") {
                         return "Field cannot be empty";
-                      } else if (int.parse(val) < 0) {
-                        return "Maximum capacity cannot be less than 0";
+                      } else if (int.parse(val) <= 0) {
+                        return "Maximum capacity should be bigger than 0";
                       } else {
                         return null;
                       }
