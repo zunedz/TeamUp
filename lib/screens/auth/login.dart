@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_alert/cool_alert.dart';
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -173,6 +174,25 @@ class _LogInState extends State<LogIn> {
                       try {
                         UserCredential userCredential =
                             await signInWithGoogle();
+                        print("can");
+                        if (userCredential.additionalUserInfo!.isNewUser) {
+                          await FirebaseFirestore.instance
+                              .collection('appUser')
+                              .doc('${userCredential.user!.uid}')
+                              .set({
+                            'createdAt': Timestamp.now(),
+                            'email': userCredential.user!.email,
+                            'isInsideRoom': false,
+                            'roomId': "",
+                            "userId": userCredential.user!.uid,
+                            'username': userCredential.user!.displayName,
+                            'avatarUrl': userCredential.user!.photoURL,
+                            "followerIdArray": [],
+                            "followingIdArray": [],
+                          });
+                          print(userCredential.user!.uid);
+                        }
+
                         print(userCredential.user!.uid);
                       } catch (e) {
                         print(e);

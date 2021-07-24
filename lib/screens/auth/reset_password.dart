@@ -70,7 +70,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                       margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
                       child: MaterialButton(
                         onPressed: () async {
-                          if (!checkFields(formKey)) {
+                          print("clicked");
+                          if (checkFields(formKey)) {
+                            print("inside if");
                             try {
                               setState(() {
                                 isLoading = true;
@@ -83,13 +85,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 context: context,
                                 type: CoolAlertType.success,
                                 text: "An email has been sent",
-                                title: "Failed to LogIn",
                               );
                               return;
                             } catch (e) {
                               print(e);
                             }
                           }
+                          print("else if");
                         },
                         elevation: 0,
                         height: 50,

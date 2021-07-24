@@ -79,7 +79,9 @@ class AuthMethods {
   Future<void> signOut(BuildContext context) async {
     try {
       await _auth.signOut();
+      // await GoogleSignIn().disconnect();
       await GoogleSignIn().signOut();
+
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/',
         (route) => false,

@@ -96,7 +96,7 @@ class RoomItem extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               subtitle: Text(
-                roomData.description!,
+                roomData.description == null ? "" : roomData.description!,
                 style: TextStyle(
                   color: Colors.grey,
                 ),

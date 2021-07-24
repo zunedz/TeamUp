@@ -59,7 +59,7 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
               child: Column(
                 children: [
                   TextFormField(
-                    validator: (val) => val == null ? "Cannot be empty" : null,
+                    validator: (val) => val == "" ? "Cannot be empty" : null,
                     onChanged: (value) {
                       roomName = value.trim();
                     },
@@ -69,7 +69,7 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
                     height: 20.0,
                   ),
                   TextFormField(
-                    validator: (val) => val == null ? "Cannot be empty" : null,
+                    validator: (val) => val == "" ? "Cannot be empty" : null,
                     onChanged: (value) {
                       gameName = value.trim().toUpperCase();
                     },
@@ -80,10 +80,10 @@ class _CreateNewRoomState extends State<CreateNewRoom> {
                   ),
                   TextFormField(
                     validator: (val) {
-                      if (val == null) {
+                      if (val == null || val == "") {
                         return "Field cannot be empty";
-                      } else if (int.parse(val) < 0) {
-                        return "Maximum capacity cannot be less than 0";
+                      } else if (int.parse(val) <= 0) {
+                        return "Maximum capacity should be bigger than 0";
                       } else {
                         return null;
                       }
